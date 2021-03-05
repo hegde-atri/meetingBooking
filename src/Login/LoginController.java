@@ -1,7 +1,5 @@
 package Login;
 
-import Admin.AdminController;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,13 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+    //creates a LoginModel
     LoginModel loginModel = new LoginModel();
+    //If any variable are not used in the methods, then are probably are used for styling in the stylesheet (Login.css) which is in the stylesheet folder
     @FXML
     private Label connectionLabel;
     @FXML
@@ -50,7 +49,7 @@ public class LoginController implements Initializable {
         try {
             //this if statement uses the loginModel object created in the beginning of this class and uses the isLogin method.
             if (this.loginModel.isLogin(this.usernameField.getText(), this.passwordField.getText(), accountType.getValue())) {
-                System.out.println("works");
+                //This deletes the current stage (the current stage needs to be reached from the button) and opens the new stage
                 Stage stage = (Stage) this.loginButton.getScene().getWindow();
                 stage.close();
                 switch (accountType.getValue()) {
@@ -64,7 +63,7 @@ public class LoginController implements Initializable {
             } else {
                 credentialsLabel.setText("Invalid log in!");
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -74,10 +73,11 @@ public class LoginController implements Initializable {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Admin/Admin.fxml").openStream());
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 1280, 720);
+            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Admin.css").toExternalForm());
             stage.setScene(scene);
             stage.setTitle("Admin Dashboard");
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,10 +91,11 @@ public class LoginController implements Initializable {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Customer/Customer.fxml").openStream());
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 1280, 720);
+            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Customer.css").toExternalForm());
             stage.setScene(scene);
             stage.setTitle("Customer Dashboard");
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,6 +105,22 @@ public class LoginController implements Initializable {
 
     //Launches the registration page to create a new User
     public void registerUser(){
+        try {
+            //We need to get the old stage, so we can close it before we open the Register page
+            Stage old = (Stage)registerButton.getScene().getWindow();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = loader.load(getClass().getResource("/Register/Register.fxml").openStream());
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Register.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setTitle("Register Page");
+            stage.setResizable(false);
+            old.close();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
