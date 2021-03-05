@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,6 +21,8 @@ public class LoginController implements Initializable {
     @FXML
     private Label credentialsLabel;
     @FXML
+    private Label meetingBookerLabel;
+    @FXML
     private Button loginButton;
     @FXML
     private Button registerButton;
@@ -30,24 +31,29 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
     @FXML
-    private ComboBox<options> isAdminBox;
+    private ComboBox<String> accountType;
 
+
+//Initialize method the tells us whether if successfully connected to the database or not
     public void initialize(URL url, ResourceBundle rb) {
         if (this.loginModel.isConnected()) {
             connectionLabel.setText("Connected to DB");
         } else {
             connectionLabel.setText("DB offline");
         }
-        this.isAdminBox.setItems(FXCollections.observableArrayList(options.values()));
+        accountType.getItems().addAll("Admin", "Customer");
     }
 
+    //This method will take the inputs from the fields, verify that they are correct and will take them to their respective window, based on their account type
     @FXML
     public void login() {
         try {
-            if (this.loginModel.isLogin(this.usernameField.getText(), this.passwordField.getText(), ((options) this.isAdminBox.getValue()).toString())) {
+            //this if statement uses the loginModel object created in the beginning of this class and uses the isLogin method.
+            if (this.loginModel.isLogin(this.usernameField.getText(), this.passwordField.getText(), accountType.getValue())) {
+                System.out.println("works");
                 Stage stage = (Stage) this.loginButton.getScene().getWindow();
                 stage.close();
-                switch (((options) this.isAdminBox.getValue()).toString()) {
+                switch (accountType.getValue()) {
                     case "Admin":
                         adminLogin();
                         break;
@@ -62,6 +68,7 @@ public class LoginController implements Initializable {
         }
     }
 
+    //Launches the admin dashboard, the related files are in the Admin package
     public void adminLogin() {
         try {
             Stage stage = new Stage();
@@ -78,6 +85,7 @@ public class LoginController implements Initializable {
 
     }
 
+    //Launches the customer dashboard, the related files are in the Customer package
     public void customerLogin() {
         try {
             Stage stage = new Stage();
@@ -93,4 +101,10 @@ public class LoginController implements Initializable {
         }
 
     }
+
+    //Launches the registration page to create a new User
+    public void registerUser(){
+
+    }
+
 }

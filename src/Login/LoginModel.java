@@ -10,8 +10,10 @@ import java.sql.SQLException;
 
 public class LoginModel {
 
+    //Global variable to reduce redundancy
     Connection connection;
 
+    //Constructor that establishes connection to database
      public LoginModel(){
          try{
              this.connection = DBConnection.getConnection();
@@ -23,20 +25,17 @@ public class LoginModel {
          }
      }
 
+     //This will tell use whether the connection was established or not
      public boolean isConnected(){
          return this.connection != null;
      }
 
-     public void registerUser(String Username, String Firstname, String Lastname, String Password, String Email)throws SQLException{
-         PreparedStatement ps = null;
-         ResultSet rs = null;
-         String sql = "";
-     }
-
+    //This will take the following parameters and will verify it with the database.
+    // It will reject you if you try and login as a customer from and admin account and vice versa
      public boolean isLogin(String username, String password, String Admin) throws SQLException {
          PreparedStatement ps = null;
          ResultSet rs = null;
-         String sql = "SELECT * FROM Users where Username = ? and Password = ? and Admin = ?";
+         String sql = "SELECT * FROM Users where Username = ? and Password = ? and Account = ?";
          try{
              ps = this.connection.prepareStatement(sql);
              ps.setString(1, username);
@@ -51,6 +50,8 @@ public class LoginModel {
          }catch(SQLException e){
              return false;
          }finally{
+             assert ps != null;
+             assert rs != null;
              ps.close();
              rs.close();
          }
