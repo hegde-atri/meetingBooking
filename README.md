@@ -1,4 +1,4 @@
-#Books meeting rooms
+# Books meeting rooms
 - [ ] Customer cannot book 'occupied' rooms.
 - [ ] Customer Page verifies email format.
 - [ ] Customer requests for room, and Admins approve the requests.
