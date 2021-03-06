@@ -111,7 +111,7 @@ public class LoginController implements Initializable {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Register/Register.fxml").openStream());
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 400, 400);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Register.css").toExternalForm());
             stage.setScene(scene);
             stage.setTitle("Register Page");

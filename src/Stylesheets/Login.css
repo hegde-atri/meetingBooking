@@ -2,7 +2,7 @@
     -fx-background-color: #dbb1b1, #fff0f0;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
-    -fx-border-color: cyan;
+    -fx-border-color: lightblue;
 }
 .text-field{
     -fx-background-color: transparent;
@@ -26,6 +26,7 @@
     -fx-text-fill: green;
 }
 #credentialsLabel{
+    -fx-alignment: center;
     -fx-text-fill: red;
 }
 .button{

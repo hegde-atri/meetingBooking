@@ -20,6 +20,10 @@ public class RegisterController {
     @FXML
     private Label Heading;
     @FXML
+    private Label errorLabel;
+    @FXML
+    private Label backgroundLabel;
+    @FXML
     private Button registerButton;
     @FXML
     private Button cancelButton;
@@ -90,13 +94,12 @@ public class RegisterController {
     public void registerUser() throws SQLException {
         try {
 
-            if (checkFormat()) {
-                if (usernameField.getText() != null
-                        && firstNameField.getText() != null
-                        && lastNameField.getText() != null
-                        && emailField.getText() != null
-                        && passwordField.getText() != null) {
-
+            if (usernameField.getText() != null
+                    && firstNameField.getText() != null
+                    && lastNameField.getText() != null
+                    && emailField.getText() != null
+                    && passwordField.getText() != null) {
+                if (checkFormat()) {
                     if (registerLogic(usernameField.getText(), firstNameField.getText(), lastNameField.getText(), passwordField.getText(), emailField.getText())) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Message");
@@ -105,16 +108,19 @@ public class RegisterController {
 
                         alert.showAndWait().ifPresent((btnType) -> {
                             if (btnType == ButtonType.OK) {
-                                Platform.exit();
+                                backToLogin();
                             }
                         });
-
+                    }else{
+                        errorLabel.setText("Account cannot be created with current details");
                     }
 
                 } else {
-
-
+                    errorLabel.setText("Invalid email address!");
                 }
+            }else{
+                errorLabel.setText("Missing information!");
+
             }
         } catch (SQLException e) {
             System.out.println("Error: " + e);
