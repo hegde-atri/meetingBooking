@@ -1,14 +1,16 @@
-package Register;
+package Admin;
+
+/*
+This class is almost completely the same os registerController.java in the Register package
+ */
 
 import DBUtil.DBConnection;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +18,7 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterController {
+public class adminCreation {
     @FXML
     private Label Heading;
     @FXML
@@ -51,7 +53,7 @@ public class RegisterController {
             statement.setString(3, Lastname);
             statement.setString(4, Password);
             statement.setString(5, Email);
-            statement.setString(6, "Customer");
+            statement.setString(6, "Admin");
 
             statement.execute();
             con.close();
@@ -71,15 +73,15 @@ public class RegisterController {
     }
 
     //This will take you back to the login page.
-    public void backToLogin() {
+    public void backToAdmin() {
         try {
             //We need to get the old stage, so we can close it before we go back to the login page
             Stage old = (Stage) registerButton.getScene().getWindow();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            Parent root = loader.load(getClass().getResource("/Login/LoginFXML.fxml").openStream());
+            Parent root = loader.load(getClass().getResource("/Admin/Admin.fxml").openStream());
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Login.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Admin.css").toExternalForm());
             stage.setScene(scene);
             stage.setTitle("Register Page");
             stage.setResizable(false);
@@ -90,6 +92,7 @@ public class RegisterController {
         }
     }
 
+    //Same method from the register page but now we have the accountType set as admin
     @FXML
     public void registerUser() throws SQLException {
         try {
@@ -108,7 +111,7 @@ public class RegisterController {
 
                         alert.showAndWait().ifPresent((btnType) -> {
                             if (btnType == ButtonType.OK) {
-                                backToLogin();
+                                backToAdmin();
                             }
                         });
                     }else{
@@ -127,3 +130,4 @@ public class RegisterController {
         }
     }
 }
+

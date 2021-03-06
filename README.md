@@ -4,10 +4,10 @@
 - [ ] Automatically schedules cleaners after the room has been vacated. 
 - [ ] Automatically does not allow you to add refreshments at the same time as others.  
 - [ ] Customer cannot book 'occupied' rooms and cannot book unless room has been serviced.
-- [ ] Customer Page verifies email format.
-- [ ] Customer requests for room, and Admins approve the requests.
-- [ ] Greyed out buttons when room is unavailable.  
-- [ ] Add styles to table view in customer dashboard.
+- [X] Customer Page verifies email format.  
+- [ ] ~~Customer requests for room, and Admins approve the requests.~~  
+- [ ] ~~Greyed out buttons when room is unavailable.~~  
+- [X] Stylize UI
 
 
 ### The specifications for this program are as follows:

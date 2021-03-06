@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Admin.adminCreation">
+    <children>
+        <Label fx:id="backgroundLabel" layoutX="25.0" layoutY="14.0" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <Button fx:id="registerButton" layoutX="320.0" layoutY="338.0" mnemonicParsing="false" onAction="#registerUser" text="Register" />
+        <Button fx:id="cancelButton" layoutX="14.0" layoutY="338.0" mnemonicParsing="false" onAction="#backToAdmin" text="Cancel" />
+        <TextField fx:id="usernameField" layoutX="192.0" layoutY="102.0" prefHeight="26.0" prefWidth="160.0" promptText="Enter username" />
+        <TextField fx:id="firstNameField" layoutX="192.0" layoutY="137.0" prefHeight="26.0" prefWidth="160.0" promptText="Enter First name" />
+        <TextField fx:id="lastNameField" layoutX="192.0" layoutY="169.0" prefHeight="26.0" prefWidth="160.0" promptText="Enter Last name" />
+        <TextField fx:id="emailField" layoutX="192.0" layoutY="203.0" prefHeight="26.0" prefWidth="160.0" promptText="someone@example.com" />
+        <PasswordField fx:id="passwordField" layoutX="192.0" layoutY="238.0" prefHeight="26.0" prefWidth="160.0" promptText="Enter your password" />
+        <Label layoutX="40.0" layoutY="106.0" prefWidth="62.0" text="Username" />
+        <Label layoutX="41.0" layoutY="242.0" text="Password" />
+        <Label layoutX="39.0" layoutY="141.0" text="First name" />
+        <Label layoutX="40.0" layoutY="173.0" text="Last name" />
+        <Label layoutX="53.0" layoutY="209.0" text="Email" />
+        <Label fx:id="Heading" layoutX="127.0" layoutY="41.0" text="Create an account" />
+        <Label fx:id="errorLabel" layoutX="113.0" layoutY="295.0" prefHeight="15.0" prefWidth="160.0" textAlignment="CENTER" />
+    </children>
+</AnchorPane>
