@@ -1,0 +1,41 @@
+#Heading{
+    -fx-text-fill: black;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}
+#errorLabel{
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+#backgroundLabel{
+    -fx-background-color: lightblue;
+}
+.label{
+    -fx-text-fill: black;
+    -fx-font-size: 12;
+}
+.text-field {
+    -fx-background-color: #dbb1b1, #fff0f0;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: white;
+}
+.text-field{
+    -fx-background-color: white;
+}
+#cancelButton{
+    -fx-text-fill: white;
+    -fx-background-color: darkred;
+}
+#cancelButton:hover{
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+}
+#registerButton{
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+#registerButton:hover{
+    -fx-background-color: cyan;
+    -fx-font-weight: bold;
+}

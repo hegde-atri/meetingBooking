@@ -1,0 +1,39 @@
+.text-field {
+    -fx-background-color: #dbb1b1, #fff0f0;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: lightblue;
+}
+.text-field{
+    -fx-background-color: transparent;
+}
+.text-field .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+.text-field .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color, lightblue;
+}
+
+
+#meetingBookerLabel{
+    -fx-font-size: 16;
+    -fx-font-family: "Segoe UI";
+}
+#connectionLabel{
+    -fx-text-fill: green;
+}
+#credentialsLabel{
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+.button{
+    -fx-text-fill: black;
+    -fx-background-color: lightblue;
+}
+.button:hover{
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}

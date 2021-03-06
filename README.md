@@ -1,6 +1,8 @@
 # Books meeting rooms
 - [ ] Catering Dashboard.
 - [ ] Cleaners Dashboard.
+- [ ] Automatically schedules cleaners after the room has been vacated. 
+- [ ] Automatically does not allow you to add refreshments at the same time as others.  
 - [ ] Customer cannot book 'occupied' rooms and cannot book unless room has been serviced.
 - [ ] Customer Page verifies email format.
 - [ ] Customer requests for room, and Admins approve the requests.
