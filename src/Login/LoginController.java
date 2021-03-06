@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +23,10 @@ public class LoginController implements Initializable {
     private Label credentialsLabel;
     @FXML
     private Label meetingBookerLabel;
+    @FXML
+    private Label backgroundLabel;
+    @FXML
+    private ImageView background;
     @FXML
     private Button loginButton;
     @FXML
@@ -41,6 +47,11 @@ public class LoginController implements Initializable {
             connectionLabel.setText("DB offline");
         }
         accountType.getItems().addAll("Admin", "Customer");
+        Image image = new Image("/images/login.jpg");
+        background = new ImageView(image);
+        background.setFitHeight(400);
+        background.setPreserveRatio(true);
+        backgroundLabel.setGraphic(background);
     }
 
     //This method will take the inputs from the fields, verify that they are correct and will take them to their respective window, based on their account type

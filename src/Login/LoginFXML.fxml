@@ -5,27 +5,16 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Login.LoginController">
-   <TextField fx:id="usernameField" alignment="CENTER" layoutX="424.0" layoutY="123.0" promptText="Username"
-              text="owner"/>
-   <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="424.0" layoutY="163.0" promptText="Password"
-                  text="hello"/>
-   <Label fx:id="connectionLabel" layoutX="500.0" layoutY="377.0" prefHeight="18.0" prefWidth="100.0"/>
-   <Button fx:id="loginButton" layoutX="473.0" layoutY="253.0" mnemonicParsing="false" onAction="#login" text="Log in"/>
-   <ComboBox fx:id="accountType" layoutX="424.0" layoutY="200.0" prefHeight="29.0" prefWidth="152.0"
-             promptText="Account type"/>
-   <Button fx:id="registerButton" layoutX="468.0" layoutY="294.0" mnemonicParsing="false" onAction="#registerUser"
-           text="Register"/>
-   <Label fx:id="credentialsLabel" layoutX="450.0" layoutY="229.0" prefHeight="18.0" prefWidth="100.0"/>
-   <ImageView fitHeight="416.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="file:/D:/Repos/HOMEWORK/meetingBooking/images/login.jpg"/>
-   </ImageView>
-   <Label fx:id="meetingBookerLabel" layoutX="442.0" layoutY="64.0" prefHeight="32.0" prefWidth="116.0"
-          text="Meeting Booker"/>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.LoginController">
+   <TextField fx:id="usernameField" alignment="CENTER" layoutX="424.0" layoutY="123.0" promptText="Username" text="owner" />
+   <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="424.0" layoutY="163.0" promptText="Password" text="hello" />
+   <Label fx:id="connectionLabel" layoutX="500.0" layoutY="377.0" prefHeight="18.0" prefWidth="100.0" />
+   <Button fx:id="loginButton" layoutX="473.0" layoutY="253.0" mnemonicParsing="false" onAction="#login" text="Log in" />
+   <ComboBox fx:id="accountType" layoutX="424.0" layoutY="200.0" prefHeight="29.0" prefWidth="152.0" promptText="Account type" />
+   <Button fx:id="registerButton" layoutX="468.0" layoutY="294.0" mnemonicParsing="false" onAction="#registerUser" text="Register" />
+   <Label fx:id="credentialsLabel" layoutX="450.0" layoutY="229.0" prefHeight="18.0" prefWidth="100.0" />
+   <Label fx:id="meetingBookerLabel" layoutX="442.0" layoutY="64.0" prefHeight="32.0" prefWidth="116.0" text="Meeting Booker" />
+   <Label fx:id="backgroundLabel" layoutX="6.0" prefHeight="400.0" prefWidth="400.0" AnchorPane.leftAnchor="0.0" />
 </AnchorPane>
