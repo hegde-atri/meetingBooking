@@ -12,6 +12,14 @@
     -fx-background-color: turquoise;
     -fx-text-fill: black;
 }
+#DBOnlineLabel{
+    -fx-text-fill: green;
+    -fx-text-alignment: right;
+}
+#dbSizeLabel{
+    -fx-text-alignment: right;
+    -fx-text-fill: green;
+}
 #headingLabel{
     -fx-text-fill: black;
     -fx-font-weight: bold;

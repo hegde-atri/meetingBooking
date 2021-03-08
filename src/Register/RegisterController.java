@@ -64,7 +64,7 @@ public class RegisterController {
 
     //This will make sure that the required format is entered returning true/false. For this project only verification of email is required.
     public boolean checkFormat() {
-        String regex = "^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$";
+        String regex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(emailField.getText());
         return matcher.matches();

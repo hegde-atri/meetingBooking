@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Login extends Application {
@@ -12,6 +13,7 @@ public class Login extends Application {
         Parent root = (Parent) FXMLLoader.load(getClass().getResource("LoginFXML.fxml"));
         Scene scene =  new Scene(root, 600, 400);
         scene.getStylesheets().add(getClass().getResource("/Stylesheets/Login.css").toExternalForm());
+        primaryStage.getIcons().add(new Image("/images/black.jpg"));
         primaryStage.setScene(scene);
         primaryStage.setTitle("Meeting booker login");
         primaryStage.setResizable(false);

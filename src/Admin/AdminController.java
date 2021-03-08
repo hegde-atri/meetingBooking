@@ -15,6 +15,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,9 +37,15 @@ public class AdminController {
     @FXML
     private Label backgroundLabel;
     @FXML
+    private Label dbSizeLabel;
+    @FXML
+    private Label DBOnlineLabel;
+    @FXML
     private Label accountLabel;
     @FXML
     private Label headingLabel;
+    @FXML
+    private Button clearDB;
     @FXML
     private Button reloadButton;
     @FXML
@@ -59,13 +68,15 @@ public class AdminController {
     private TableColumn<AccountData, String> accountTypeColumn;
     private ObservableList<AccountData> data;
     private ObservableList pieData;
-    double duration = 0;
+    int duration = 0;
 
 
     //Initialises the window, so it will open with the table and pie chart populated
     public void initialize() {
+        DBOnlineLabel.setText("DB online");
         setPieData();
         loadCustomerData();
+        getDBSize("Meetings.sqlite");
     }
 
     //This method loads the data onto the pi chart
@@ -88,22 +99,14 @@ public class AdminController {
 
             //Goes through every single booking we have.
             for (userBookings x : ubList) {
-                LocalDate currentDate = LocalDate.now();
                 //To get the bookings we have for today.
-                if (x.getStartDate().equals(currentDate)) {
-                    if (x.getStartDate().equals(x.getEndDate())) {
-                        duration = duration + Duration.between(x.getStartTime(), x.getEndTime()).toMinutes();
-                    } else {
-                        //If the booking is over many days, we need to see how many hours they have booked for today.
-                        LocalTime end = LocalTime.of(0, 0, 0);
-                        duration = duration + Duration.between(end, x.getStartTime()).toMinutes();
-                    }
+                duration = duration + x.getTodayDuration();
                 }
-            }
+
             //To get the duration when there are no bookings.
-            int intDuration = (int) duration;
-            int free = 3600 - intDuration;
-            pieData = FXCollections.observableArrayList(new PieChart.Data("Bookings", intDuration),
+
+            int free = 1440 - duration;
+            pieData = FXCollections.observableArrayList(new PieChart.Data("Bookings", duration),
                     new PieChart.Data("Unoccupied", free));
             //Sets it to null first and then adds the data so that this method can be used when the page is refreshed
             chart.setData(pieData);
@@ -165,13 +168,39 @@ public class AdminController {
         }
     }
 
-    //reloads the page using data from database.
+    //reloads the page using data from database. calls the initialise method.
     @FXML
     public void refreshPage() {
-        setPieData();
-        loadCustomerData();
+        initialize();
     }
 
+    //displays the size of the database file.
+    @FXML
+    public void getDBSize(String fileName) {
+        Path path = Paths.get(fileName);
+        try {
+            // size of a file (in bytes)
+            long bytes = Files.size(path);
+            dbSizeLabel.setText(String.format( "Database size: "+ "%,d KB", bytes / 1024));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Delete all booking details before today.
+    public void clearUpDB(){
+        try {
+            String sql = "DELETE FROM Bookings WHERE EndDate <= date('now','-1 day')";
+            Connection con = DBConnection.getConnection();
+            assert con != null;
+            con.createStatement().execute(sql);
+        }catch(SQLException e){
+            System.out.println("Error: " + e);
+        }
+
+    }
+
+    //redirects you back to login
     @FXML
     public void backToLogin() {
         try {

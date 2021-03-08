@@ -1,6 +1,7 @@
 package Admin;
 
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,6 +14,8 @@ public class userBookings {
     private LocalDate startDate;
     private LocalDate endDate;
     private String resources;
+    private String refreshments;
+    private String refreshmentsTime;
 
     public userBookings(int roomID, int userID, String username, LocalTime startTime, LocalTime endTime, LocalDate startDate, LocalDate endDate, String resources) {
         this.roomID = roomID;
@@ -23,6 +26,50 @@ public class userBookings {
         this.startDate = startDate;
         this.endDate = endDate;
         this.resources = resources;
+    }
+
+    public userBookings(int roomID, int userID, String username, LocalTime startTime, LocalTime endTime, LocalDate startDate, LocalDate endDate, String resources, String refreshments, String refreshmentsTime) {
+        this.roomID = roomID;
+        this.userID = userID;
+        this.username = username;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.resources = resources;
+        this.refreshments = refreshments;
+        this.refreshmentsTime = refreshmentsTime;
+    }
+
+    public int getTodayDuration(){
+        if(this.getStartDate().equals(this.getEndDate())){
+            return (int) Duration.between(this.getStartTime(), this.getEndTime()).toMinutes();
+        }else{
+            //If the booking is over many days, we need to see how many hours they have booked for today.
+            LocalTime end = LocalTime.of(0, 0, 0);
+            int endDuration = (int)Duration.between(end, this.getEndTime()).toMinutes();
+            int startDuration = (int)Duration.between(this.getStartTime(), end).toMinutes();
+            return startDuration + endDuration;
+        }
+    }
+    public int getDuration(){
+        return -1;
+    }
+
+    public String getRefreshments() {
+        return refreshments;
+    }
+
+    public void setRefreshments(String refreshments) {
+        this.refreshments = refreshments;
+    }
+
+    public String getRefreshmentsTime() {
+        return refreshmentsTime;
+    }
+
+    public void setRefreshmentsTime(String refreshmentsTime) {
+        this.refreshmentsTime = refreshmentsTime;
     }
 
     public int getRoomID() {
