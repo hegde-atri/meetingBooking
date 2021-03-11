@@ -14,8 +14,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+    //This stores the information of the current user
+    public static User currentUser;
     //creates a LoginModel
-    LoginModel loginModel = new LoginModel();
+    private final LoginModel loginModel = new LoginModel();
     //If any variable are not used in the methods, then are probably are used for styling in the stylesheet (Login.css) which is in the stylesheet folder
     @FXML
     private Label connectionLabel;
@@ -65,10 +67,10 @@ public class LoginController implements Initializable {
                 stage.close();
                 switch (accountType.getValue()) {
                     case "Admin":
-                        adminLogin();
+                        adminLogin(currentUser);
                         break;
                     case "Customer":
-                        customerLogin();
+                        customerLogin(currentUser);
                         break;
                 }
             } else {
@@ -79,13 +81,14 @@ public class LoginController implements Initializable {
     }
 
     //Launches the admin dashboard, the related files are in the Admin package
-    public void adminLogin() {
+    public void adminLogin(User currentUser) {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Admin/Admin.fxml").openStream());
             Scene scene = new Scene(root, 1280, 720);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Admin.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/admin.png"));
             stage.setScene(scene);
             stage.setTitle("Admin Dashboard");
             stage.setResizable(false);
@@ -97,13 +100,14 @@ public class LoginController implements Initializable {
     }
 
     //Launches the customer dashboard, the related files are in the Customer package
-    public void customerLogin() {
+    public void customerLogin(User currentUser) {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Customer/Customer.fxml").openStream());
             Scene scene = new Scene(root, 1280, 720);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Customer.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/customer.png"));
             stage.setScene(scene);
             stage.setTitle("Customer Dashboard");
             stage.setResizable(false);

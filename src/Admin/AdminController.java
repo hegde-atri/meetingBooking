@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -158,6 +159,7 @@ public class AdminController {
             Parent root = loader.load(getClass().getResource("/Admin/adminCreation.fxml").openStream());
             Scene scene = new Scene(root, 400, 400);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Register.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/add.png"));
             stage.setScene(scene);
             stage.setTitle("Register admin");
             stage.setResizable(false);
@@ -210,6 +212,7 @@ public class AdminController {
             Parent root = loader.load(getClass().getResource("/Login/LoginFXML.fxml").openStream());
             Scene scene = new Scene(root, 600, 400);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Login.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/mainIcon.jpeg"));
             stage.setScene(scene);
             stage.setTitle("Meeting booker login");
             stage.setResizable(false);

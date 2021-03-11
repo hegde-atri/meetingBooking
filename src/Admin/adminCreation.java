@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
@@ -82,6 +83,7 @@ public class adminCreation {
             Parent root = loader.load(getClass().getResource("/Admin/Admin.fxml").openStream());
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Admin.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/admin.png"));
             stage.setScene(scene);
             stage.setTitle("Register Page");
             stage.setResizable(false);

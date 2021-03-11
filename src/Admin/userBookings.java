@@ -46,14 +46,19 @@ public class userBookings {
             return (int) Duration.between(this.getStartTime(), this.getEndTime()).toMinutes();
         }else{
             //If the booking is over many days, we need to see how many hours they have booked for today.
+            return (int)Duration.between(this.getStartTime(), LocalTime.of(0, 0, 0)).toMinutes();
+        }
+    }
+    public int getDuration(){
+        if(this.getStartDate().equals(this.getEndDate())){
+            return (int) Duration.between(this.getStartTime(), this.getEndTime()).toMinutes();
+        }else{
+            //If the booking is over many days, we need to see how many hours they have booked for total, maximum booking time allowed is 24 hours, so they cannot pass 2 days.
             LocalTime end = LocalTime.of(0, 0, 0);
             int endDuration = (int)Duration.between(end, this.getEndTime()).toMinutes();
             int startDuration = (int)Duration.between(this.getStartTime(), end).toMinutes();
             return startDuration + endDuration;
         }
-    }
-    public int getDuration(){
-        return -1;
     }
 
     public String getRefreshments() {

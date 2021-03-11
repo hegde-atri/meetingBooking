@@ -13,7 +13,7 @@ public class Login extends Application {
         Parent root = (Parent) FXMLLoader.load(getClass().getResource("LoginFXML.fxml"));
         Scene scene =  new Scene(root, 600, 400);
         scene.getStylesheets().add(getClass().getResource("/Stylesheets/Login.css").toExternalForm());
-        primaryStage.getIcons().add(new Image("/images/black.jpg"));
+        primaryStage.getIcons().add(new Image("/images/mainIcon.jpeg"));
         primaryStage.setScene(scene);
         primaryStage.setTitle("Meeting booker login");
         primaryStage.setResizable(false);

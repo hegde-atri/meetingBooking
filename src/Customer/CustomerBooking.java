@@ -19,6 +19,19 @@ public class CustomerBooking {
         this.refreshmentsTime = refreshmentsTime;
     }
 
+    @Override
+    public String toString() {
+        return "CustomerBooking{" +
+                "roomID=" + roomID +
+                ", timePeriod='" + timePeriod + '\'' +
+                ", dates='" + dates + '\'' +
+                ", duration=" + duration +
+                ", equipment='" + equipment + '\'' +
+                ", refreshments='" + refreshments + '\'' +
+                ", refreshmentsTime='" + refreshmentsTime + '\'' +
+                '}';
+    }
+
     public int getRoomID() {
         return roomID;
     }
