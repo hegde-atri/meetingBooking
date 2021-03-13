@@ -1,12 +1,10 @@
 package Customer;
 
 
-import Admin.AdminController;
 import Admin.userBookings;
 import DBUtil.DBConnection;
 import Login.LoginController;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +17,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,30 +24,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 public class CustomerController {
+    @FXML
+    private Label currentBookingsLabel;
     @FXML
     private Label welcomeLabel;
     @FXML
     private Button backButton;
     @FXML
-    private TableView<CustomerBooking> myTable;
+    private TableView<userBookings> myTable;
     @FXML
-    private TableColumn<CustomerBooking, Integer> roomIDColumn;
+    private TableColumn<userBookings, Integer> roomIDColumn;
     @FXML
-    private TableColumn<CustomerBooking, String> timePeriodColumn;
+    private TableColumn<userBookings, String> startTimeColumn;
     @FXML
-    private TableColumn<CustomerBooking, String> dateColumn;
+    private TableColumn<userBookings, String> endTimeColumn;
     @FXML
-    private TableColumn<CustomerBooking, Integer> durationColumn;
+    private TableColumn<userBookings, String> startDateColumn;
     @FXML
-    private TableColumn<CustomerBooking, String> equipmentColumn;
+    private TableColumn<userBookings, String> endDateColumn;
     @FXML
-    private TableColumn<CustomerBooking, String> refreshmentsColumn;
+    private TableColumn<userBookings, String> resourcesColumn;
     @FXML
-    private TableColumn<CustomerBooking, String> refreshmentsTimeColumn;
-    private ObservableList<CustomerBooking> data;
+    private TableColumn<userBookings, String> refreshmentsColumn;
+    @FXML
+    private TableColumn<userBookings, String> refreshmentsTimeColumn;
+
+
+    private ObservableList<userBookings> data;
 
     public void initialize(){
         welcomeLabel.setText("Welcome back " + LoginController.currentUser.getFirstname());
@@ -60,8 +62,8 @@ public class CustomerController {
 
     public void loadBookingData() {
         try {
-            PreparedStatement ps = null;
-            ResultSet rs = null;
+            PreparedStatement ps;
+            ResultSet rs;
             String sql = "SELECT * FROM Bookings WHERE UserID IS ?";
             Connection con = DBConnection.getConnection();
             this.data = FXCollections.observableArrayList();
@@ -71,29 +73,46 @@ public class CustomerController {
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                //To make things complicated I've decided to use userBookings objects which contains 100% of the details and then use the data i get from it to then add the data to the observableList data i created.
+                //To make things complicated I've decided to use userBookings objects which contains 100% of the details and then use the data i get from it to then add the data to the observableList data i created as a userBooking object.
                 userBookings ub  = new userBookings(rs.getInt(1), rs.getInt(2), rs.getString(3), LocalTime.parse(rs.getString(4)), LocalTime.parse(rs.getString(5)),
                         LocalDate.parse(rs.getString(6)), LocalDate.parse(rs.getString(7)), rs.getString(8), rs.getString(9), rs.getString(10));
-                this.data.add(new CustomerBooking(ub.getRoomID(),(ub.getStartTime()+" to "+ub.getEndTime()), (ub.getStartDate()+" - "+ub.getEndDate()), ub.getDuration(), ub.getResources(), ub.getRefreshments(), ub.getRefreshmentsTime()));
+                this.data.add(ub);
             }
         } catch (SQLException e) {
             System.err.println("Error: " + e);
         }
 
         this.roomIDColumn.setCellValueFactory(new PropertyValueFactory<>("roomID"));
-        this.timePeriodColumn.setCellValueFactory(new PropertyValueFactory<>("timePeriod"));
-        this.dateColumn.setCellValueFactory(new PropertyValueFactory<>("dates"));
-        this.durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
-        this.equipmentColumn.setCellValueFactory(new PropertyValueFactory<>("equipment"));
+        this.startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        this.endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        this.startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        this.endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        this.resourcesColumn.setCellValueFactory(new PropertyValueFactory<>("resources"));
         this.refreshmentsColumn.setCellValueFactory(new PropertyValueFactory<>("refreshments"));
         this.refreshmentsTimeColumn.setCellValueFactory(new PropertyValueFactory<>("refreshmentsTime"));
         //so that this doubles as a refresh function, i made it so that it removes existing data from the table and then adds them again.
         this.myTable.setItems(null);
         this.myTable.setItems(data);
 
+    }
 
-
-
+    @FXML
+    public void deleteBooking(){
+        try {
+            PreparedStatement ps;
+            String sql = "DELETE FROM Bookings WHERE RoomID is ? AND UserID is ? AND StartTime is ? AND StartDate is ?";
+            Connection con = DBConnection.getConnection();
+            assert con != null;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, myTable.getSelectionModel().getSelectedItem().getRoomID());
+            ps.setInt(2, LoginController.currentUser.getUserID());
+            ps.setString(3, String.valueOf(myTable.getSelectionModel().getSelectedItem().getStartTime()));
+            ps.setString(4, String.valueOf(myTable.getSelectionModel().getSelectedItem().getStartDate()));
+            ps.execute();
+            myTable.getItems().remove(myTable.getSelectionModel().getSelectedItem());
+        }catch(SQLException e){
+            System.out.println("Error: " + e);
+        }
     }
 
     @FXML

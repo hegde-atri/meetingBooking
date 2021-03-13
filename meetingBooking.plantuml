@@ -39,6 +39,12 @@ title __MEETINGBOOKING's Class Diagram__\n
   
 
   namespace Customer {
+    class Customer.CustomerBooking {
+    }
+  }
+  
+
+  namespace Customer {
     class Customer.CustomerController {
     }
   }
@@ -64,6 +70,12 @@ title __MEETINGBOOKING's Class Diagram__\n
 
   namespace Login {
     class Login.LoginModel {
+    }
+  }
+  
+
+  namespace Login {
+    class Login.User {
     }
   }
   

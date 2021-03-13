@@ -12,6 +12,7 @@ title __LOGIN's Class Diagram__\n
 
   namespace Login {
     class Login.LoginController {
+        {static} + currentUser : User
         - accountType : ComboBox<String>
         - background : ImageView
         - backgroundLabel : Label
@@ -37,6 +38,21 @@ title __LOGIN's Class Diagram__\n
         + LoginModel()
         + isConnected()
         + isLogin()
+    }
+  }
+  
+
+  namespace Login {
+    class Login.User {
+        - email : String
+        - firstname : String
+        - lastname : String
+        - userID : int
+        + User()
+        + getEmail()
+        + getFirstname()
+        + getLastname()
+        + getUserID()
     }
   }
   

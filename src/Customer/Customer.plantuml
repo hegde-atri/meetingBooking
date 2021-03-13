@@ -3,7 +3,51 @@
 title __CUSTOMER's Class Diagram__\n
 
   namespace Customer {
+    class Customer.CustomerBooking {
+        - dates : String
+        - duration : int
+        - equipment : String
+        - refreshments : String
+        - refreshmentsTime : String
+        - roomID : int
+        - timePeriod : String
+        + CustomerBooking()
+        + getDates()
+        + getDuration()
+        + getEquipment()
+        + getRefreshments()
+        + getRefreshmentsTime()
+        + getRoomID()
+        + getTimePeriod()
+        + setDates()
+        + setDuration()
+        + setEquipment()
+        + setRefreshments()
+        + setRefreshmentsTime()
+        + setRoomID()
+        + setTimePeriod()
+        + toString()
+    }
+  }
+  
+
+  namespace Customer {
     class Customer.CustomerController {
+        - backButton : Button
+        - currentBookingsLabel : Label
+        - data : ObservableList<CustomerBooking>
+        - dateColumn : TableColumn<CustomerBooking, String>
+        - durationColumn : TableColumn<CustomerBooking, Integer>
+        - equipmentColumn : TableColumn<CustomerBooking, String>
+        - myTable : TableView<CustomerBooking>
+        - refreshmentsColumn : TableColumn<CustomerBooking, String>
+        - refreshmentsTimeColumn : TableColumn<CustomerBooking, String>
+        - roomIDColumn : TableColumn<CustomerBooking, Integer>
+        - timePeriodColumn : TableColumn<CustomerBooking, String>
+        - welcomeLabel : Label
+        + backToLogin()
+        + initialize()
+        + loadBookingData()
     }
   }
   

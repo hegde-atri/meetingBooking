@@ -39,7 +39,8 @@ title __ADMIN's Class Diagram__\n
 
   namespace Admin {
     class Admin.AdminController {
-        ~ duration : double
+        ~ duration : int
+        - DBOnlineLabel : Label
         - IDColumn : TableColumn<AccountData, String>
         - accountLabel : Label
         - accountTypeColumn : TableColumn<AccountData, String>
@@ -48,7 +49,9 @@ title __ADMIN's Class Diagram__\n
         - caterersDashboardButton : Button
         - chart : PieChart
         - cleanersDashboardButton : Button
+        - clearDB : Button
         - data : ObservableList<AccountData>
+        - dbSizeLabel : Label
         - emailColumn : TableColumn<AccountData, String>
         - firstnameColumn : TableColumn<AccountData, String>
         - headingLabel : Label
@@ -60,6 +63,8 @@ title __ADMIN's Class Diagram__\n
         - usernameColumn : TableColumn<AccountData, String>
         + addAdmin()
         + backToLogin()
+        + clearUpDB()
+        + getDBSize()
         + initialize()
         + loadCustomerData()
         + openCaterersDashboard()
@@ -94,28 +99,37 @@ title __ADMIN's Class Diagram__\n
     class Admin.userBookings {
         - endDate : LocalDate
         - endTime : LocalTime
+        - refreshments : String
+        - refreshmentsTime : String
         - resources : String
         - roomID : int
         - startDate : LocalDate
         - startTime : LocalTime
         - userID : int
         - username : String
+        + getDuration()
         + getEndDate()
         + getEndTime()
+        + getRefreshments()
+        + getRefreshmentsTime()
         + getResources()
         + getRoomID()
         + getStartDate()
         + getStartTime()
+        + getTodayDuration()
         + getUserID()
         + getUsername()
         + setEndDate()
         + setEndTime()
+        + setRefreshments()
+        + setRefreshmentsTime()
         + setResources()
         + setRoomID()
         + setStartDate()
         + setStartTime()
         + setUserID()
         + setUsername()
+        + userBookings()
         + userBookings()
     }
   }

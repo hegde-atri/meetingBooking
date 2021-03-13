@@ -32,7 +32,7 @@ public class LoginModel {
 
     //This will take the following parameters and will verify it with the database.
     // It will reject you if you try and login as a customer from and admin account and vice versa
-     public boolean isLogin(String username, String password, String AccountType) throws SQLException {
+     public boolean isLogin(String username, String password, String AccountType)throws SQLException{
          PreparedStatement ps = null;
          ResultSet rs = null;
          String sql = "SELECT * FROM Users where Username = ? and Password = ? and Account = ?";
