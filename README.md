@@ -1,4 +1,5 @@
 # Books meeting rooms
+- [ ] Add the ability to edit bookings.
 - [ ] Catering Dashboard.
 - [ ] Cleaners Dashboard.
 - [ ] Automatically schedules cleaners after the room has been vacated. 
@@ -7,7 +8,7 @@
 - [X] Customer Page verifies email format.  
 - [ ] ~~Customer requests for room, and Admins approve the requests.~~  
 - [ ] ~~Greyed out buttons when room is unavailable.~~  
-- [X] Stylize UI
+- [ ] Stylize UI.
 
 
 ### The specifications for this program are as follows:

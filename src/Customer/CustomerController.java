@@ -33,6 +33,8 @@ public class CustomerController {
     @FXML
     private Button backButton;
     @FXML
+    private Button newBookingButton;
+    @FXML
     private TableView<userBookings> myTable;
     @FXML
     private TableColumn<userBookings, Integer> roomIDColumn;
@@ -112,6 +114,26 @@ public class CustomerController {
             myTable.getItems().remove(myTable.getSelectionModel().getSelectedItem());
         }catch(SQLException e){
             System.out.println("Error: " + e);
+        }
+    }
+
+    @FXML
+    private void newBooking(){
+        try {
+            Stage old = (Stage)newBookingButton.getScene().getWindow();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = loader.load(getClass().getResource("/RoomBooker/RoomBooker.fxml").openStream());
+            Scene scene = new Scene(root, 1280, 720);
+            scene.getStylesheets().add(getClass().getResource("/Stylesheets/RoomBooker.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/booking.png"));
+            stage.setScene(scene);
+            stage.setTitle("Register Page");
+            stage.setResizable(false);
+            old.close();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

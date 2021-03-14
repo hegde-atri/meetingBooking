@@ -128,6 +128,7 @@ public class LoginController implements Initializable {
             Parent root = loader.load(getClass().getResource("/Register/Register.fxml").openStream());
             Scene scene = new Scene(root, 400, 400);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Register.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/add.png"));
             stage.setScene(scene);
             stage.setTitle("Register Page");
             stage.setResizable(false);

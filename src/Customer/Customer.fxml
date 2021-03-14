@@ -30,7 +30,7 @@
          </contextMenu>
       </TableView>
       <Label fx:id="currentBookingsLabel" layoutX="754.0" layoutY="32.0" text="Current bookings" />
-      <Button layoutX="109.0" layoutY="597.0" mnemonicParsing="false" text="Book a room" />
+      <Button fx:id="newBookingButton" layoutX="109.0" layoutY="597.0" mnemonicParsing="false" onAction="#newBooking" text="Book a room" />
       <Button layoutX="124.0" layoutY="541.0" mnemonicParsing="false" onAction="#initialize" text="Refresh" />
       <Button fx:id="backButton" layoutX="14.0" layoutY="674.0" mnemonicParsing="false" onAction="#backToLogin" text="Back" />
       <Label fx:id="welcomeLabel" layoutX="73.0" layoutY="83.0" prefHeight="18.0" prefWidth="164.0" />
