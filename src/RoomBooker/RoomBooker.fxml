@@ -14,27 +14,28 @@
    <children>
       <ListView layoutX="380.0" layoutY="50.0" prefHeight="670.0" prefWidth="900.0" />
       <Label layoutX="730.0" layoutY="23.0" prefHeight="18.0" prefWidth="201.0" text="Available times for selected date" />
-      <DatePicker fx:id="datePicker" layoutX="145.0" layoutY="263.0" />
-      <TextField fx:id="endTimeField" layoutX="145.0" layoutY="334.0" prefHeight="26.0" prefWidth="180.0" />
-      <TextArea layoutX="147.0" layoutY="418.0" prefHeight="85.0" prefWidth="180.0" />
-      <TextField fx:id="refreshmentsTimeBox" layoutX="145.0" layoutY="510.0" prefHeight="26.0" prefWidth="180.0" />
-      <TextField fx:id="resourcesTextField" layoutX="147.0" layoutY="372.0" prefHeight="26.0" prefWidth="180.0" />
-      <Label layoutX="34.0" layoutY="267.0" text="Select a date" />
-      <Label layoutX="43.0" layoutY="304.0" text="Start time" />
-      <Label layoutX="44.0" layoutY="338.0" text="End Time" />
-      <Label layoutX="41.0" layoutY="376.0" text="Resources" />
-      <Label layoutX="30.0" layoutY="452.0" text="Refreshments" />
-      <Label layoutX="16.0" layoutY="514.0" text="Refreshments time">
+      <DatePicker fx:id="datePicker" editable="false" layoutX="135.0" layoutY="210.0" prefHeight="26.0" prefWidth="201.0" />
+      <TextField fx:id="endTimeField" layoutX="135.0" layoutY="300.0" prefHeight="26.0" prefWidth="201.0" />
+      <TextArea layoutX="135.0" layoutY="385.0" prefHeight="85.0" prefWidth="201.0" />
+      <TextField fx:id="refreshmentsTimeBox" layoutX="135.0" layoutY="488.0" prefHeight="26.0" prefWidth="201.0" />
+      <TextField fx:id="resourcesTextField" layoutX="137.0" layoutY="347.0" prefHeight="26.0" prefWidth="201.0" />
+      <Label layoutX="49.0" layoutY="214.0" text="Select a date" AnchorPane.rightAnchor="1160.0" />
+      <Label layoutX="63.0" layoutY="258.0" text="Start time" AnchorPane.rightAnchor="1160.0" />
+      <Label layoutX="65.0" layoutY="304.0" text="End Time" AnchorPane.rightAnchor="1160.0" />
+      <Label layoutX="61.0" layoutY="351.0" text="Resources" AnchorPane.rightAnchor="1160.0" />
+      <Label layoutX="40.0" layoutY="398.0" text="Refreshments" AnchorPane.rightAnchor="1160.0" />
+      <Label layoutX="16.0" layoutY="492.0" text="Refreshments time" AnchorPane.rightAnchor="1160.0">
          <tooltip>
             <Tooltip text="Comma separated time values. e.g 12:30, 13:30" />
          </tooltip></Label>
-      <TextField fx:id="startTimeField" layoutX="145.0" layoutY="300.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="startTimeField" layoutX="135.0" layoutY="254.0" prefHeight="26.0" prefWidth="201.0" />
       <Button fx:id="bookButton" layoutX="250.0" layoutY="640.0" mnemonicParsing="false" onAction="#verifyFields" prefHeight="32.0" prefWidth="77.0" text="Book" />
       <Button layoutX="30.0" layoutY="640.0" mnemonicParsing="false" text="Cancel" />
-      <Spinner fx:id="roomSelector" layoutX="159.0" layoutY="78.0" />
+      <Spinner fx:id="roomSelector" layoutX="138.0" layoutY="78.0" prefHeight="26.0" prefWidth="201.0" />
       <TextArea fx:id="roomDescriptionBox" editable="false" layoutX="135.0" layoutY="114.0" prefHeight="85.0" prefWidth="201.0" />
-      <Label layoutX="29.0" layoutY="82.0" text="Room Number" />
-      <Label layoutX="19.0" layoutY="148.0" prefHeight="18.0" prefWidth="106.0" text="Room Description" />
+      <Label layoutX="29.0" layoutY="82.0" text="Room Number" AnchorPane.rightAnchor="1160.0" />
+      <Label layoutX="19.0" layoutY="148.0" prefHeight="18.0" prefWidth="106.0" text="Room Description" AnchorPane.rightAnchor="1160.0" />
       <Label fx:id="errorLabel" layoutX="173.0" layoutY="561.0" prefHeight="18.0" prefWidth="124.0" />
+      <Button layoutX="238.0" layoutY="538.0" mnemonicParsing="false" onAction="#setListView" prefHeight="32.0" prefWidth="102.0" text="Refresh Times" />
    </children>
 </AnchorPane>
