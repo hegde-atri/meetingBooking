@@ -42,12 +42,11 @@ public class userBookings {
     }
 
     public int getTodayDuration(){
-        if(this.getStartDate().equals(this.getEndDate())){
-            return (int) Duration.between(this.getStartTime(), this.getEndTime()).toMinutes();
-        }else{
-            //If the booking is over many days, we need to see how many hours they have booked for today.
-            return (int)Duration.between(this.getStartTime(), LocalTime.of(0, 0, 0)).toMinutes();
+        LocalDate today = LocalDate.now();
+        if(this.startDate.equals(today)){
+            return getDuration();
         }
+        return 0;
     }
     public int getDuration(){
         if(this.getStartDate().equals(this.getEndDate())){
