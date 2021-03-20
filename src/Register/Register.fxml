@@ -30,5 +30,6 @@
       <Label layoutX="53.0" layoutY="209.0" text="Email" />
       <Label fx:id="Heading" layoutX="127.0" layoutY="41.0" text="Create an account" />
       <Label fx:id="errorLabel" layoutX="113.0" layoutY="295.0" prefHeight="15.0" prefWidth="160.0" textAlignment="CENTER" />
+      <PasswordField fx:id="passwordField1" layoutX="192.0" layoutY="270.0" prefHeight="26.0" prefWidth="160.0" promptText="Re-enter password" />
    </children>
 </AnchorPane>

@@ -124,7 +124,7 @@ public class CustomerController {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/RoomBooker/RoomBooker.fxml").openStream());
-            Scene scene = new Scene(root, 1280, 720);
+            Scene scene = new Scene(root, 720, 720);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/RoomBooker.css").toExternalForm());
             stage.getIcons().add(new Image("/images/booking.png"));
             stage.setScene(scene);
