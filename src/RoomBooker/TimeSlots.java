@@ -12,6 +12,9 @@ public class TimeSlots {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+    public TimeSlots(){
+
+    }
 
     public void createTimeSlots(){
         for(int x=0; x<22; x++){

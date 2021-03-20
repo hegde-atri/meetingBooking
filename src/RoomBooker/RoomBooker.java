@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,6 +56,7 @@ public class RoomBooker {
         initializeComboBox();
         initializeSpinner();
         setDateBounds();
+        setTableView();
 
     }
 
@@ -104,7 +106,7 @@ public class RoomBooker {
 
     //This code does nothing but display the free times for the date selected in 30 minute intervals and adds them to the list view
     @FXML
-    public void setListView() {
+    public void setTableView() {
         try {
             LocalDate selectedDate = datePicker.getValue();
             /*
@@ -123,15 +125,17 @@ public class RoomBooker {
             ps.setString(2, selectedDate.toString());
 
             ObservableList<TimeSlots> data = FXCollections.observableArrayList();
-
+            TimeSlots timeSlots = new TimeSlots();
+            timeSlots.createTimeSlots();
             rs = ps.executeQuery();
             while (rs.next()) {
-                for (int x = 0; x < 48; x++) {
-
-
+                if(rs.getString("StartDate").equals(selectedDate.toString())){
+                    data.add(new TimeSlots(rs.getString("StartTime"), rs.getString("EndTime")));
                 }
             }
 
+            startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+            endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
             myTable.setItems(null);
             myTable.setItems(data);
 
@@ -215,13 +219,19 @@ public class RoomBooker {
             x = endTimeHour.getValue() + ":" + endTimeMin.getValue();
             LocalTime et = LocalTime.parse(x);
 
+            System.out.println(endTimeHour.getValue());
+            boolean why = (endTimeMin.getValue().equals("30"));
+            System.out.println(why);
+
             int timeCompare = st.compareTo(et);
             System.out.println(timeCompare);
             if (timeCompare == 0) {
                 errorLabel.setText("End time cannot be start time");
             } else if (timeCompare == 1) {
                 errorLabel.setText("End time cannot be before start time");
-            } else if (timeCompare == -1) {
+            } else if (endTimeHour.getValue().equals("22") && endTimeMin.getValue().equals("30")) {
+                errorLabel.setText("End time out of bounds!");
+            }else if (timeCompare == -1) {
                 errorLabel.setText("");
                 return true;
             }
