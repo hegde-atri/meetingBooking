@@ -11,6 +11,10 @@
 - [ ] ~~Greyed out buttons when room is unavailable.~~  
 - [ ] Stylize UI + Add tooltips.
 
+### A few shortcomings to take note of
+- Foreign keys are not used! This means carelessly deleting customer accounts might lead to errors in booking timings for any booings they have made in the future
+- Users privelige structure means that you need to be an admin to access the cleaner's and caterering timetable. This a security issue!
+- Passwords are not hashed/encrypted.
 
 ### The specifications for this program are as follows:
 - There are 5 different rooms, all with different sizes of how many people the room can accommodate.
@@ -40,6 +44,7 @@ Room 5 | 50 people | false
 - Cleaner's and caterer's dashboard can be viewed from the admin panel
 - Only Admin's can create new Admin accounts.
 - For demo purposes, the default Admin account has the username -  "owner" and password - "hello". (excluding the quotation marks.)
+- Timetables are automatically generated (for cleaners and caterers).
 
 ### Notes to be taken from this project
 Some pointers so that I have a project plan next time before I start a project
