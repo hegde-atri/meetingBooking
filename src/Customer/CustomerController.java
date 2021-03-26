@@ -61,7 +61,7 @@ public class CustomerController {
         loadBookingData();
     }
 
-
+//Sets tableView
     public void loadBookingData() {
         try {
             PreparedStatement ps;
@@ -98,6 +98,7 @@ public class CustomerController {
 
     }
 
+    //This will get the selected item from the table view and delete it
     @FXML
     public void deleteBooking(){
         try {
@@ -128,7 +129,7 @@ public class CustomerController {
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/RoomBooker.css").toExternalForm());
             stage.getIcons().add(new Image("/images/booking.png"));
             stage.setScene(scene);
-            stage.setTitle("Register Page");
+            stage.setTitle("Add Booking");
             stage.setResizable(false);
             old.close();
             stage.show();

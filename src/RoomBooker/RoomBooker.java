@@ -5,9 +5,15 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,6 +23,10 @@ import java.util.ArrayList;
 
 @SuppressWarnings("rawtypes")
 public class RoomBooker {
+    @FXML
+    private Label backgroundLabel;
+    @FXML
+    private Label tableLabel;
     @FXML
     private Label errorLabel;
     @FXML
@@ -234,6 +244,8 @@ public class RoomBooker {
 
     //This will take our details and add it to the Bookings table in our database
     private boolean addBooking(){
+
+
         return true;
     }
 
@@ -338,12 +350,51 @@ public class RoomBooker {
     }
 
     //This method will make sure that the caterers are free to deliver the refreshments for the selected time.
-    private boolean checkRefreshments(){
+    private boolean checkRefreshments() {
+        if(refreshmentsTimeBox.getText().isEmpty()){
+            return true;
+        }
+        String[] refreshmentsTimes = refreshmentsTimeBox.getText().split("[,] ", 0);
+
+        PreparedStatement ps;
+        String sql = "SELECT * FROM Refreshments WHERE RoomID = ? AND Date = ";
+        ArrayList<String> results = new ArrayList<>();
+        try{
+            Connection con = DBConnection.getConnection();
+        }catch(SQLException e){
+            System.err.println(e);
+        }
+
+
+
+
+
+
+
+
         return false;
     }
 
-    //This will return use to the customer dashbaord.
+    //This will return use to the customer dashboard.
+    @FXML
     private void backToDashboard(){
+        try {
+            //We need to get the old stage, so we can close it before we go back to the login page
+            Stage old = (Stage) backButton.getScene().getWindow();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = loader.load(getClass().getResource("/Customer/Customer.fxml").openStream());
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/Stylesheets/Customer.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/customer.png"));
+            stage.setScene(scene);
+            stage.setTitle("Customer Dashboard");
+            stage.setResizable(false);
+            old.close();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

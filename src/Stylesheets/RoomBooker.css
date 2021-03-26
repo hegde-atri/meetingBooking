@@ -1,3 +1,62 @@
+.root{
+    -fx-background-color: lightblue;
+}
+
+.button{
+    -fx-text-fill: white;
+}
+.text-field{
+    -fx-background-color: lightcyan;
+}
+.text-area .content{
+    -fx-background-color: lightcyan;
+}
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, lightcyan;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+}
+.table-view{
+    -fx-background-color: lightcyan;
+}
+#tableLabel{
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+    -fx-text-alignment: center;
+}
+#backgroundLabel{
+    -fx-background-color: lightblue;
+}
+
+#infoLabel{
+    -fx-text-alignment: center;
+    -fx-text-fill: darkred;
+}
+
+#bookButton{
+    -fx-background-color: #00cbbb;
+}
+#bookButton:hover{
+    -fx-background-color: #33eeee;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#backButton{
+    -fx-background-color: darkred;
+}
+#backButton:hover{
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+}
+
 #refreshButton{
     -fx-font-size: 10;
+    -fx-background-color: teal;
+    -fx-text-fill: white;
+}
+#refreshButton:hover{
+    -fx-background-color: turquoise;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
 }
