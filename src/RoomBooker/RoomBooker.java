@@ -85,36 +85,36 @@ public class RoomBooker {
                 roomDescriptionBox.setText("Room 1\nAccommodation size - 2 people\nDisabled access - false");
                 try {
                     setTableView();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             } else if (newValue.intValue() == 2) {
                 roomDescriptionBox.setText("Room 2\nAccommodation size - 4 people\nDisabled access - false");
                 try {
                     setTableView();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             } else if (newValue.intValue() == 3) {
                 roomDescriptionBox.setText("Room 3\nAccommodation size - 8 people\nDisabled access - false");
                 try {
                     setTableView();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             } else if (newValue.intValue() == 4) {
                 roomDescriptionBox.setText("Room 4\nAccommodation size - 15 people\nDisabled access - true");
                 try {
                     setTableView();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             } else if (newValue.intValue() == 5) {
                 roomDescriptionBox.setText("Room 5\nAccommodation size - 50 people\nDisabled access - false");
                 try {
                     setTableView();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -209,7 +209,7 @@ public class RoomBooker {
 
     //This will validate all details, compare them for any conflicts before finally booking the room
     @FXML
-    private void bookRoom() {
+    private void bookRoom() throws SQLException {
         if (verifyFields()) {
             if(checkBookings()){
                 if(checkRefreshments()){
@@ -294,6 +294,9 @@ public class RoomBooker {
                     if(!refreshmentsArea.getText().isEmpty() && !refreshmentsTimeBox.getText().isEmpty()){
                         String[] refreshments = refreshmentsArea.getText().split("[,] ", 0);
                         String[] refreshmentTimes = refreshmentsTimeBox.getText().split("[,] ", 0);
+                        for(String x: refreshmentTimes){
+                            LocalTime.parse(x);
+                        }
                         if(refreshments.length == refreshmentTimes.length){
                             errorLabel.setText("");
                             return true;
@@ -350,29 +353,58 @@ public class RoomBooker {
     }
 
     //This method will make sure that the caterers are free to deliver the refreshments for the selected time.
-    private boolean checkRefreshments() {
+    private boolean checkRefreshments() throws SQLException {
+
         if(refreshmentsTimeBox.getText().isEmpty()){
+            errorLabel.setText("");
             return true;
         }
+
         String[] refreshmentsTimes = refreshmentsTimeBox.getText().split("[,] ", 0);
 
-        PreparedStatement ps;
-        String sql = "SELECT * FROM Refreshments WHERE RoomID = ? AND Date = ";
-        ArrayList<String> results = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Refreshments WHERE RoomID = ? AND Date = ?";
+        ArrayList<LocalTime> results = new ArrayList<>();
+
         try{
             Connection con = DBConnection.getConnection();
+            assert con != null;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, roomSelector.getValue());
+            ps.setString(2, datePicker.getValue().toString());
+
+            rs = ps.executeQuery();
+            while(rs.next()){
+                results.add(LocalTime.parse(rs.getString(3)));
+            }
+
+            for(String x: refreshmentsTimes){
+                for(LocalTime existingRTS: results){
+                    LocalTime rts = LocalTime.parse(x);
+                    if(rts.compareTo(existingRTS) == 0){
+                        return false;
+                    }
+                }
+            }
+
+            errorLabel.setText("");
+            addRefreshment();
+            return true;
         }catch(SQLException e){
-            System.err.println(e);
+            e.printStackTrace();
+            return false;
+        }finally {
+            //To close the connection
+            assert ps != null;
+            ps.close();
+            assert rs != null;
+            rs.close();
         }
+    }
 
+    public void addRefreshment() throws SQLException{
 
-
-
-
-
-
-
-        return false;
     }
 
     //This will return use to the customer dashboard.
