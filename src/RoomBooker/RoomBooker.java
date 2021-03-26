@@ -52,6 +52,8 @@ public class RoomBooker {
     @FXML
     private TableColumn<TimeSlot, String> endTimeColumn;
 
+    ArrayList<TimeSlot> bookedTimeSlots = new ArrayList<>();
+
     public void initialize() throws SQLException {
         LocalDate today = LocalDate.now();
         datePicker.setValue(today);
@@ -63,20 +65,45 @@ public class RoomBooker {
     }
 
     //This will adds a listener to the spinner that will be used to change the description of the room they have selected.
-    public void initializeSpinner() {
+    public void initializeSpinner(){
         roomSelector.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5, 1));
         roomDescriptionBox.setText("Room 1\nAccommodation size - 2 people\nDisabled access - false");
         roomSelector.valueProperty().addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> {
             if (newValue.intValue() == 1) {
                 roomDescriptionBox.setText("Room 1\nAccommodation size - 2 people\nDisabled access - false");
+                try {
+                    setTableView();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             } else if (newValue.intValue() == 2) {
                 roomDescriptionBox.setText("Room 2\nAccommodation size - 4 people\nDisabled access - false");
+                try {
+                    setTableView();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             } else if (newValue.intValue() == 3) {
                 roomDescriptionBox.setText("Room 3\nAccommodation size - 8 people\nDisabled access - false");
+                try {
+                    setTableView();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             } else if (newValue.intValue() == 4) {
                 roomDescriptionBox.setText("Room 4\nAccommodation size - 15 people\nDisabled access - true");
+                try {
+                    setTableView();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             } else if (newValue.intValue() == 5) {
                 roomDescriptionBox.setText("Room 5\nAccommodation size - 50 people\nDisabled access - false");
+                try {
+                    setTableView();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
     }
@@ -109,7 +136,6 @@ public class RoomBooker {
     //This code does nothing but display the free times for the date selected in 30 minute intervals and adds them to the list view
     @FXML
     public void setTableView() throws SQLException {
-
             PreparedStatement ps = null;
             ResultSet rs = null;
             String sql = "SELECT * FROM Bookings WHERE RoomID = ? and StartDate = ?";
@@ -138,7 +164,6 @@ public class RoomBooker {
                 }
 
 
-//                ArrayList<TimeSlot> stdTimeSlots = TimeSlot.createTimeSlots();
                 ArrayList<TimeSlot> bookedTimeSlots = new ArrayList<>();
 
                 //The methods below me could've easily been made into methods of the timeslot class, but TIME :/
@@ -148,15 +173,15 @@ public class RoomBooker {
 
                 }
 
-
+                this.bookedTimeSlots = bookedTimeSlots;
                 //I was going to make it so that they can see the free times, but for now I've made it so that they can see the times that are not free.
-                ObservableList<TimeSlot> data = FXCollections.observableArrayList(bookedTimeSlots);
+                ObservableList<TimeSlot> data = FXCollections.observableArrayList(this.bookedTimeSlots);
 
-                this.startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-                this.endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+                startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+                endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
 
-                this.myTable.setItems(null);
-                this.myTable.setItems(data);
+                myTable.setItems(null);
+                myTable.setItems(data);
 
 
             }catch(Exception e){
@@ -173,11 +198,13 @@ public class RoomBooker {
     private void bookRoom() {
         if (verifyFields()) {
             if(checkBookings()){
-
+                System.out.println("lets go");
+            }else{
+                errorLabel.setText("Room busy at given time!");
             }
 
         } else {
-            System.out.println("no");
+            errorLabel.setText("Field verification error!");
         }
 
     }
@@ -188,7 +215,24 @@ public class RoomBooker {
         System.out.println(selectedST.toString());
         System.out.println(selectedET);
 
-        return false;
+        ArrayList<TimeSlot> requestingTS = TimeSlot.returnTimeSlots(selectedST, selectedET);
+
+        for(TimeSlot rs: this.bookedTimeSlots){
+            System.out.println(rs);
+        }
+        for(TimeSlot rs: requestingTS){
+            System.out.println(rs);
+        }
+
+        for(TimeSlot bs: this.bookedTimeSlots){
+            for(TimeSlot rs: requestingTS){
+                if(rs.exists(bs)){
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
 

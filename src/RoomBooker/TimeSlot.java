@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public class TimeSlot {
 
-    private String startTime;
-    private String endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     public TimeSlot(String startTime, String endTime){
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTime = LocalTime.parse(startTime);
+        this.endTime = LocalTime.parse(endTime);
     }
 
     public static ArrayList<TimeSlot> createTimeSlots(){
@@ -62,19 +62,27 @@ public class TimeSlot {
         return temp;
     }
 
-    public LocalTime getStartTime() {
-        return LocalTime.parse(this.startTime);
+    public boolean exists(TimeSlot ts)
+    {
+        if ((startTime.equals(ts.getStartTime())) && (endTime.equals(ts.getEndTime()))){
+            return true;
+        }
+        return false;
     }
 
-    public void setStartTime(String startTime) {
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
     public LocalTime getEndTime() {
-        return LocalTime.parse(this.endTime);
+        return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
