@@ -14,7 +14,9 @@ public class TimeSlot {
         this.endTime = LocalTime.parse(endTime);
     }
 
-    public static ArrayList<TimeSlot> createTimeSlots(){
+    //Although this method is not is use a the moment, it will be useful if i want to display the available time slots instead of the booked timeslots in RoomBooker
+    public static ArrayList<TimeSlot> createTimeSlots()
+    {
         ArrayList<TimeSlot> tempArr = new ArrayList<>();
 
         for(int x=0; x<22; x++){
@@ -47,29 +49,33 @@ public class TimeSlot {
         return tempArr;
     }
 
-    public static ArrayList<TimeSlot> returnTimeSlots(LocalTime startTime, LocalTime endTime){
+    //This will create int slot number of 30 min timeslots from startTime
+    public static ArrayList<TimeSlot> returnTimeSlots(LocalTime startTime, int slots)
+    {
         ArrayList<TimeSlot> temp = new ArrayList<>();
-
-        long timeDifference = startTime.until(endTime, ChronoUnit.MINUTES);
-        long slots = timeDifference / 30;
+        LocalTime endTime;
         for(int x = 0; x<slots; x++){
             endTime = startTime.plus(30, ChronoUnit.MINUTES);
             temp.add(new TimeSlot(startTime.toString(), endTime.toString()));
             startTime = startTime.plus(30, ChronoUnit.MINUTES);
         }
-
-
         return temp;
     }
 
-    public boolean exists(TimeSlot ts)
+    //This method will return the number of 30 minute slots between the given st and et
+    public static int getSlotNumber(LocalTime st, LocalTime et)
     {
-        if ((startTime.equals(ts.getStartTime())) && (endTime.equals(ts.getEndTime()))){
-            return true;
-        }
-        return false;
+        long timeDifference = st.until(et, ChronoUnit.MINUTES);
+        return (int)timeDifference/30 ;
     }
 
+    //This will compare the current timeslot and object to ts and check whether both objects hold the same values.
+    public boolean exists(TimeSlot ts)
+    {
+        return (startTime.equals(ts.getStartTime())) && (endTime.equals(ts.getEndTime()));
+    }
+
+    //<editor-fold desc="get-set and toString method">
     public LocalTime getStartTime() {
         return startTime;
     }
@@ -90,4 +96,6 @@ public class TimeSlot {
     public String toString() {
         return startTime+" to "+endTime;
     }
+    //</editor-fold>
+
 }

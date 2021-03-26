@@ -20,6 +20,8 @@ public class RoomBooker {
     @FXML
     private Label errorLabel;
     @FXML
+    private Label infoLabel;
+    @FXML
     private Button refreshButton;
     @FXML
     private Button bookButton;
@@ -169,7 +171,8 @@ public class RoomBooker {
                 //The methods below me could've easily been made into methods of the timeslot class, but TIME :/
                 for(int x=0; x<startTimes.size(); x++)
                 {
-                    bookedTimeSlots.addAll(TimeSlot.returnTimeSlots(startTimes.get(x), endTimes.get(x)));
+                    int length = TimeSlot.getSlotNumber(startTimes.get(x), endTimes.get(x));
+                    bookedTimeSlots.addAll(TimeSlot.returnTimeSlots(startTimes.get(x), length));
 
                 }
 
@@ -194,11 +197,31 @@ public class RoomBooker {
 
     }
 
+    //This will validate all details, compare them for any conflicts before finally booking the room
     @FXML
     private void bookRoom() {
         if (verifyFields()) {
             if(checkBookings()){
-                System.out.println("lets go");
+                if(checkRefreshments()){
+                    //Even after checking for overlapping bookings, we need to make sure that the cleaners are free at this time and can clean the room before the next booking
+                    if(addBooking()){
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Booking created!");
+
+                        alert.showAndWait().ifPresent((btnType) -> {
+                            if (btnType == ButtonType.OK) {
+                                backToDashboard();
+                            }
+                        });
+                    }else{
+                        infoLabel.setText("Note that we need to clean the rooms once you are done\nTherefore some booking me be unavailable depending on\nour cleaners!");
+                    }
+                }else{
+                    errorLabel.setText("Time selected for refreshments is unfortunately busy");
+                }
             }else{
                 errorLabel.setText("Room busy at given time!");
             }
@@ -209,20 +232,17 @@ public class RoomBooker {
 
     }
 
+    //This will take our details and add it to the Bookings table in our database
+    private boolean addBooking(){
+        return true;
+    }
+
+    //This method will check for any overlapping bookings from the already booked slots to the time slots we requested
     public boolean checkBookings(){
         LocalTime selectedST = LocalTime.parse(startTimeHour.getValue() + ":" + startTimeMin.getValue());
         LocalTime selectedET = LocalTime.parse(endTimeHour.getValue() + ":" + endTimeMin.getValue());
-        System.out.println(selectedST.toString());
-        System.out.println(selectedET);
 
-        ArrayList<TimeSlot> requestingTS = TimeSlot.returnTimeSlots(selectedST, selectedET);
-
-        for(TimeSlot rs: this.bookedTimeSlots){
-            System.out.println(rs);
-        }
-        for(TimeSlot rs: requestingTS){
-            System.out.println(rs);
-        }
+        ArrayList<TimeSlot> requestingTS = TimeSlot.returnTimeSlots(selectedST, TimeSlot.getSlotNumber(selectedST, selectedET));
 
         for(TimeSlot bs: this.bookedTimeSlots){
             for(TimeSlot rs: requestingTS){
@@ -234,7 +254,6 @@ public class RoomBooker {
 
         return true;
     }
-
 
     public boolean verifyFields() {
         if (verifyFieldsNull()) {
@@ -298,12 +317,8 @@ public class RoomBooker {
             x = endTimeHour.getValue() + ":" + endTimeMin.getValue();
             LocalTime et = LocalTime.parse(x);
 
-            System.out.println(endTimeHour.getValue());
-            boolean why = (endTimeMin.getValue().equals("30"));
-            System.out.println(why);
-
             int timeCompare = st.compareTo(et);
-            System.out.println(timeCompare);
+
             if (timeCompare == 0) {
                 errorLabel.setText("End time cannot be start time");
             } else if (timeCompare == 1) {
@@ -321,4 +336,15 @@ public class RoomBooker {
             return false;
         }
     }
+
+    //This method will make sure that the caterers are free to deliver the refreshments for the selected time.
+    private boolean checkRefreshments(){
+        return false;
+    }
+
+    //This will return use to the customer dashbaord.
+    private void backToDashboard(){
+
+    }
+
 }

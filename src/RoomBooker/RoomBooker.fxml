@@ -34,7 +34,7 @@
       <TextArea fx:id="roomDescriptionBox" editable="false" layoutX="135.0" layoutY="114.0" prefHeight="85.0" prefWidth="201.0" />
       <Label layoutX="29.0" layoutY="82.0" text="Room Number" />
       <Label layoutX="19.0" layoutY="148.0" prefHeight="18.0" prefWidth="106.0" text="Room Description" />
-      <Label fx:id="errorLabel" layoutX="13.0" layoutY="545.0" prefHeight="18.0" prefWidth="215.0" />
+      <Label fx:id="errorLabel" layoutX="24.0" layoutY="533.0" prefHeight="18.0" prefWidth="322.0" />
       <Button fx:id="refreshButton" layoutX="507.0" layoutY="676.0" mnemonicParsing="false" onAction="#setTableView" prefHeight="26.0" prefWidth="84.0" text="Refresh Times" />
       <ComboBox fx:id="startTimeHour" layoutX="138.0" layoutY="255.0" prefHeight="28.0" prefWidth="94.0" promptText="Hour" />
       <ComboBox fx:id="startTimeMin" layoutX="252.0" layoutY="255.0" prefHeight="28.0" prefWidth="94.0" promptText="Min" />
@@ -46,5 +46,6 @@
             <TableColumn fx:id="endTimeColumn" minWidth="0.0" prefWidth="150.0" text="Time end" />
         </columns>
       </TableView>
+      <Label fx:id="infoLabel" layoutX="18.0" layoutY="551.0" prefHeight="57.0" prefWidth="322.0" />
    </children>
 </AnchorPane>
