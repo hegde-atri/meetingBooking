@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RoomBooker.RoomBooker">
    <children>
-      <Label layoutX="418.0" layoutY="22.0" prefHeight="18.0" prefWidth="245.0" text="Available booking slots for selected date" />
+      <Label layoutX="475.0" layoutY="32.0" prefHeight="18.0" prefWidth="131.0" text="!! Unavailable Times !!" />
       <DatePicker fx:id="datePicker" editable="false" layoutX="135.0" layoutY="210.0" prefHeight="26.0" prefWidth="201.0" />
       <TextArea fx:id="refreshmentsArea" layoutX="135.0" layoutY="385.0" prefHeight="85.0" prefWidth="201.0" />
       <TextField fx:id="refreshmentsTimeBox" layoutX="135.0" layoutY="488.0" prefHeight="26.0" prefWidth="201.0" />
@@ -40,10 +40,10 @@
       <ComboBox fx:id="startTimeMin" layoutX="252.0" layoutY="255.0" prefHeight="28.0" prefWidth="94.0" promptText="Min" />
       <ComboBox fx:id="endTimeHour" layoutX="138.0" layoutY="299.0" prefHeight="28.0" prefWidth="94.0" promptText="Hour" />
       <ComboBox fx:id="endTimeMin" layoutX="252.0" layoutY="299.0" prefHeight="28.0" prefWidth="94.0" promptText="Min" />
-      <TableView fx:id="myTable" layoutX="395.0" layoutY="48.0" prefHeight="670.0" prefWidth="347.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="myTable" layoutX="397.0" layoutY="59.0" prefHeight="620.0" prefWidth="300.0" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="59.0">
         <columns>
-          <TableColumn fx:id="startTimeColumn" prefWidth="166.0" text="Time start" />
-            <TableColumn fx:id="endTimeColumn" minWidth="0.0" prefWidth="203.0" text="Time end" />
+          <TableColumn fx:id="startTimeColumn" prefWidth="150.0" text="Time start" />
+            <TableColumn fx:id="endTimeColumn" minWidth="0.0" prefWidth="150.0" text="Time end" />
         </columns>
       </TableView>
    </children>

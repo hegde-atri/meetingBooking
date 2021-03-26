@@ -8,11 +8,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 
 @SuppressWarnings("rawtypes")
@@ -46,13 +46,15 @@ public class RoomBooker {
     @FXML
     private javafx.scene.control.Spinner<Integer> roomSelector;
     @FXML
-    private TableView<TimeSlots> myTable;
+    private TableView<TimeSlot> myTable;
     @FXML
-    private TableColumn<TimeSlots, String> startTimeColumn;
+    private TableColumn<TimeSlot, String> startTimeColumn;
     @FXML
-    private TableColumn<TimeSlots, String> endTimeColumn;
+    private TableColumn<TimeSlot, String> endTimeColumn;
 
-    public void initialize() {
+    public void initialize() throws SQLException {
+        LocalDate today = LocalDate.now();
+        datePicker.setValue(today);
         initializeComboBox();
         initializeSpinner();
         setDateBounds();
@@ -106,54 +108,87 @@ public class RoomBooker {
 
     //This code does nothing but display the free times for the date selected in 30 minute intervals and adds them to the list view
     @FXML
-    public void setTableView() {
-        try {
-            LocalDate selectedDate = datePicker.getValue();
-            /*
-            need to write a query to database getting all the bookings for the date selected
-            and then i need to add a line to the list view every 30 minutes that it is not free.
-            --> I also need to make sure that they can only book in 30 minute blocks and can't have booking like these 12:50-13:20
-            --> I also realised that if 2 meetings end at the same time, since there is only 1 cleaner there will a be a bigger turnover time for one of the rooms
-             */
-            PreparedStatement ps;
-            ResultSet rs;
-            String sql = "SELECT * FROM Bookings WHERE RoomID IS ? AND StartDate IS ?";
-            Connection con = DBConnection.getConnection();
-            assert con != null;
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, roomSelector.getValue());
-            ps.setString(2, selectedDate.toString());
+    public void setTableView() throws SQLException {
 
-            ObservableList<TimeSlots> data = FXCollections.observableArrayList();
-            TimeSlots timeSlots = new TimeSlots();
-            timeSlots.createTimeSlots();
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                if(rs.getString("StartDate").equals(selectedDate.toString())){
-                    data.add(new TimeSlots(rs.getString("StartTime"), rs.getString("EndTime")));
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String sql = "SELECT * FROM Bookings WHERE RoomID = ? and StartDate = ?";
+            try{
+                LocalDate selectedDate = datePicker.getValue();
+                if(selectedDate==null){
+                    return;
                 }
+                Connection con = DBConnection.getConnection();
+                assert con != null;
+                ps = con.prepareStatement(sql);
+
+                int selectedRoom = roomSelector.getValue();
+
+                ps.setInt(1, selectedRoom);
+                ps.setString(2, selectedDate.toString());
+
+
+                ArrayList<LocalTime> startTimes = new ArrayList<>();
+                ArrayList<LocalTime> endTimes = new ArrayList<>();
+
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    startTimes.add(LocalTime.parse(rs.getString(4)));
+                    endTimes.add(LocalTime.parse(rs.getString(5)));
+                }
+
+
+//                ArrayList<TimeSlot> stdTimeSlots = TimeSlot.createTimeSlots();
+                ArrayList<TimeSlot> bookedTimeSlots = new ArrayList<>();
+
+                //The methods below me could've easily been made into methods of the timeslot class, but TIME :/
+                for(int x=0; x<startTimes.size(); x++)
+                {
+                    bookedTimeSlots.addAll(TimeSlot.returnTimeSlots(startTimes.get(x), endTimes.get(x)));
+
+                }
+
+
+                //I was going to make it so that they can see the free times, but for now I've made it so that they can see the times that are not free.
+                ObservableList<TimeSlot> data = FXCollections.observableArrayList(bookedTimeSlots);
+
+                this.startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+                this.endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+
+                this.myTable.setItems(null);
+                this.myTable.setItems(data);
+
+
+            }catch(Exception e){
+                errorLabel.setText("xd");
+
+            }finally{
+                ps.close();
+                rs.close();
             }
 
-            startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-            endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-            myTable.setItems(null);
-            myTable.setItems(data);
-
-
-        } catch (Exception e) {
-            errorLabel.setText("Invalid date");
-        }
     }
 
     @FXML
     private void bookRoom() {
         if (verifyFields()) {
-            System.out.println("yay");
+            if(checkBookings()){
+
+            }
 
         } else {
             System.out.println("no");
         }
 
+    }
+
+    public boolean checkBookings(){
+        LocalTime selectedST = LocalTime.parse(startTimeHour.getValue() + ":" + startTimeMin.getValue());
+        LocalTime selectedET = LocalTime.parse(endTimeHour.getValue() + ":" + endTimeMin.getValue());
+        System.out.println(selectedST.toString());
+        System.out.println(selectedET);
+
+        return false;
     }
 
 
