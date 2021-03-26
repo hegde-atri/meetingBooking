@@ -17,6 +17,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterController {
+
+    //<editor-fold desc="variables">
     @FXML
     private Label Heading;
     @FXML
@@ -37,6 +39,7 @@ public class RegisterController {
     private PasswordField passwordField;
     @FXML
     private TextField emailField;
+    //</editor-fold>
 
     //This will take the following as parameters to add their details into the database. The ID column will be automatically incremented
     public boolean registerLogic(String Username, String Firstname, String Lastname, String Password, String Email) throws SQLException {

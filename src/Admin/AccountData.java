@@ -22,6 +22,7 @@ public class AccountData {
         this.accountType = new SimpleStringProperty(accountType);
     }
 
+    //<editor-fold desc="set-get">
     public String getID() {
         return ID.get();
     }
@@ -105,4 +106,5 @@ public class AccountData {
     public void setAccountType(String accountType) {
         this.accountType.set(accountType);
     }
+    //</editor-fold>
 }

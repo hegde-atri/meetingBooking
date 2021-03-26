@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 @SuppressWarnings("rawtypes")
 public class RoomBooker {
+
+    //<editor-fold desc="variables">
     @FXML
     private Label backgroundLabel;
     @FXML
@@ -64,7 +66,8 @@ public class RoomBooker {
     @FXML
     private TableColumn<TimeSlot, String> endTimeColumn;
 
-    ArrayList<TimeSlot> bookedTimeSlots = new ArrayList<>();
+    private ArrayList<TimeSlot> bookedTimeSlots = new ArrayList<>();
+    //</editor-fold>
 
     public void initialize() throws SQLException {
         LocalDate today = LocalDate.now();
@@ -404,6 +407,9 @@ public class RoomBooker {
     }
 
     public void addRefreshment() throws SQLException{
+        PreparedStatement ps = null;
+        String sql = "INSERT INTO Refreshments(RoomID, Date, Time, Refreshment) VALUES (?, ?, ?, ?)";
+
 
     }
 

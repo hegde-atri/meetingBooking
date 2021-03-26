@@ -1,3 +1,4 @@
+/*<editor-fold desc="fields">*/
 .text-field {
     -fx-background-color: #dbb1b1, #fff0f0;
     -fx-background-radius: 15;
@@ -16,6 +17,7 @@
 .combo-box-base {
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color, lightblue;
 }
+/*</editor-fold>*/
 
 
 #meetingBookerLabel{
@@ -29,6 +31,7 @@
     -fx-alignment: center;
     -fx-text-fill: red;
 }
+
 .button{
     -fx-text-fill: black;
     -fx-background-color: lightblue;

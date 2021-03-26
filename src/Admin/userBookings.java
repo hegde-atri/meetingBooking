@@ -60,6 +60,7 @@ public class userBookings {
         }
     }
 
+    //<editor-fold desc="set-get">
     public String getRefreshments() {
         return refreshments;
     }
@@ -139,4 +140,5 @@ public class userBookings {
     public void setResources(String resources) {
         this.resources = resources;
     }
+    //</editor-fold>
 }

@@ -14,6 +14,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+
+    //<editor-fold desc="variables">
     //This stores the information of the current user
     public static User currentUser;
     //creates a LoginModel
@@ -39,6 +41,7 @@ public class LoginController implements Initializable {
     private PasswordField passwordField;
     @FXML
     private ComboBox<String> accountType;
+    //</editor-fold>
 
 
 //Initialize method the tells us whether if successfully connected to the database or not
@@ -80,6 +83,7 @@ public class LoginController implements Initializable {
         }
     }
 
+    //<editor-fold desc="methods to open other windows">
     //Launches the admin dashboard, the related files are in the Admin package
     public void adminLogin(User currentUser) {
         try {
@@ -139,5 +143,6 @@ public class LoginController implements Initializable {
         }
 
     }
+    //</editor-fold>
 
 }

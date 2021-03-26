@@ -1,16 +1,6 @@
+/*<editor-fold desc="labels">*/
 #backgroundLabel{
     -fx-background-color: lightblue;
-}
-.chart-legend {
-    -fx-background-color: #00ebdf;
-}
-.button{
-    -fx-background-color: teal;
-    -fx-text-fill: white;
-}
-.button:hover{
-    -fx-background-color: turquoise;
-    -fx-text-fill: black;
 }
 #DBOnlineLabel{
     -fx-text-fill: green;
@@ -31,6 +21,17 @@
     -fx-font-weight: bold;
     -fx-font-size: 16;
 }
+/*</editor-fold>*/
+
+/*<editor-fold desc="buttons">*/
+.button{
+    -fx-background-color: teal;
+    -fx-text-fill: white;
+}
+.button:hover{
+    -fx-background-color: turquoise;
+    -fx-text-fill: black;
+}
 #addAdminButton{
     -fx-background-color: green;
 }
@@ -43,8 +44,8 @@
 #reloadButton:hover{
     -fx-background-color: grey;
 }
-.table-row-cell:hover {
-    -fx-background-color: lightblue;
-    -fx-text-background-color: black;
-}
+/*</editor-fold>*/
 
+.chart-legend {
+    -fx-background-color: #00ebdf;
+}

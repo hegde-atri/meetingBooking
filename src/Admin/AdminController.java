@@ -22,13 +22,13 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class AdminController {
 
+    //<editor-fold desc="variables">
     @FXML
     private Button cleanersDashboardButton;
     @FXML
@@ -70,6 +70,7 @@ public class AdminController {
     private ObservableList<AccountData> data;
     private ObservableList pieData;
     int duration = 0;
+    //</editor-fold>
 
 
     //Initialises the window, so it will open with the table and pie chart populated
@@ -202,6 +203,7 @@ public class AdminController {
 
     }
 
+    //<editor-fold desc="methods that open different windows">
     //redirects you back to login
     @FXML
     public void backToLogin() {
@@ -263,6 +265,7 @@ public class AdminController {
         }
 
     }
+    //</editor-fold>
 
 
 }

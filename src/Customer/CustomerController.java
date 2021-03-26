@@ -26,6 +26,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class CustomerController {
+
+    //<editor-fold desc="variables">
     @FXML
     private Label currentBookingsLabel;
     @FXML
@@ -53,15 +55,15 @@ public class CustomerController {
     @FXML
     private TableColumn<userBookings, String> refreshmentsTimeColumn;
 
-
     private ObservableList<userBookings> data;
+    //</editor-fold>
 
     public void initialize(){
         welcomeLabel.setText("Welcome back " + LoginController.currentUser.getFirstname());
         loadBookingData();
     }
 
-//Sets tableView
+    //Sets tableView
     public void loadBookingData() {
         try {
             PreparedStatement ps;
