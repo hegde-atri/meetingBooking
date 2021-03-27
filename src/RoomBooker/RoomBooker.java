@@ -1,9 +1,8 @@
 package RoomBooker;
 
-import Admin.userBookings;
+import Cleaners.CleaningModel;
 import DBUtil.DBConnection;
 import Login.LoginController;
-import Login.User;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,14 +16,14 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-
-@SuppressWarnings("rawtypes")
 public class RoomBooker {
 
     //<editor-fold desc="variables">
@@ -83,7 +82,7 @@ public class RoomBooker {
     }
 
     //This will adds a listener to the spinner that will be used to change the description of the room they have selected.
-    public void initializeSpinner(){
+    public void initializeSpinner() {
         roomSelector.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5, 1));
         roomDescriptionBox.setText("Room 1\nAccommodation size - 2 people\nDisabled access - false");
         roomSelector.valueProperty().addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> {
@@ -154,62 +153,61 @@ public class RoomBooker {
     //This code does nothing but display the free times for the date selected in 30 minute intervals and adds them to the list view
     @FXML
     public void setTableView() throws SQLException {
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            String sql = "SELECT * FROM Bookings WHERE RoomID = ? and StartDate = ?";
-            try{
-                LocalDate selectedDate = datePicker.getValue();
-                if(selectedDate==null){
-                    return;
-                }
-                Connection con = DBConnection.getConnection();
-                assert con != null;
-                ps = con.prepareStatement(sql);
-
-                int selectedRoom = roomSelector.getValue();
-
-                ps.setInt(1, selectedRoom);
-                ps.setString(2, selectedDate.toString());
-
-
-                ArrayList<LocalTime> startTimes = new ArrayList<>();
-                ArrayList<LocalTime> endTimes = new ArrayList<>();
-
-                rs = ps.executeQuery();
-                while(rs.next()){
-                    startTimes.add(LocalTime.parse(rs.getString(4)));
-                    endTimes.add(LocalTime.parse(rs.getString(5)));
-                }
-
-
-                ArrayList<TimeSlot> bookedTimeSlots = new ArrayList<>();
-
-                //The methods below me could've easily been made into methods of the timeslot class, but TIME :/
-                for(int x=0; x<startTimes.size(); x++)
-                {
-                    int length = TimeSlot.getSlotNumber(startTimes.get(x), endTimes.get(x));
-                    bookedTimeSlots.addAll(TimeSlot.returnTimeSlots(startTimes.get(x), length));
-
-                }
-
-                this.bookedTimeSlots = bookedTimeSlots;
-                //I was going to make it so that they can see the free times, but for now I've made it so that they can see the times that are not free.
-                ObservableList<TimeSlot> data = FXCollections.observableArrayList(this.bookedTimeSlots);
-
-                startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-                endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-
-                myTable.setItems(null);
-                myTable.setItems(data);
-
-
-            }catch(Exception e){
-                errorLabel.setText("xd");
-
-            }finally{
-                ps.close();
-                rs.close();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Bookings WHERE RoomID = ? and StartDate = ?";
+        try {
+            LocalDate selectedDate = datePicker.getValue();
+            if (selectedDate == null) {
+                return;
             }
+            Connection con = DBConnection.getConnection();
+            assert con != null;
+            ps = con.prepareStatement(sql);
+
+            int selectedRoom = roomSelector.getValue();
+
+            ps.setInt(1, selectedRoom);
+            ps.setString(2, selectedDate.toString());
+
+
+            ArrayList<LocalTime> startTimes = new ArrayList<>();
+            ArrayList<LocalTime> endTimes = new ArrayList<>();
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                startTimes.add(LocalTime.parse(rs.getString(4)));
+                endTimes.add(LocalTime.parse(rs.getString(5)));
+            }
+
+
+            ArrayList<TimeSlot> bookedTimeSlots = new ArrayList<>();
+
+            //The methods below me could've easily been made into methods of the timeslot class, but TIME :/
+            for (int x = 0; x < startTimes.size(); x++) {
+                int length = TimeSlot.getSlotNumber(startTimes.get(x), endTimes.get(x));
+                bookedTimeSlots.addAll(TimeSlot.returnTimeSlots(startTimes.get(x), length));
+
+            }
+
+            this.bookedTimeSlots = bookedTimeSlots;
+            //I was going to make it so that they can see the free times, but for now I've made it so that they can see the times that are not free.
+            ObservableList<TimeSlot> data = FXCollections.observableArrayList(this.bookedTimeSlots);
+
+            startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+            endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+
+            myTable.setItems(null);
+            myTable.setItems(data);
+
+
+        } catch (Exception e) {
+            errorLabel.setText("xd");
+
+        } finally {
+            ps.close();
+            rs.close();
+        }
 
     }
 
@@ -217,11 +215,11 @@ public class RoomBooker {
     @FXML
     private void bookRoom() throws SQLException {
         if (verifyFields()) {
-            if(checkBookings()){
-                if(checkRefreshments()){
+            if (checkBookings()) {
+                if (checkRefreshments()) {
                     //Even after checking for overlapping bookings, we need to make sure that the cleaners are free at this time and can clean the room before the next booking
-                    if(addBooking()){
-                        if (addRefreshment()) {
+                    if (roomCleaned()) {
+                        if (addBooking()) {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Message");
                             alert.setHeaderText(null);
@@ -232,14 +230,15 @@ public class RoomBooker {
                                     backToDashboard();
                                 }
                             });
+                        } else {
+                            infoLabel.setText("Note that we need to clean the rooms once you are done\nTherefore some booking me be unavailable depending on\nour cleaners!");
                         }
-                    }else{
-                        infoLabel.setText("Note that we need to clean the rooms once you are done\nTherefore some booking me be unavailable depending on\nour cleaners!");
                     }
-                }else{
+                } else {
                     errorLabel.setText("Time selected for refreshments is unfortunately busy");
+                    infoLabel.setText("Please make sure that the refreshments times are within selected time frame!");
                 }
-            }else{
+            } else {
                 errorLabel.setText("Room busy at given time!");
             }
 
@@ -251,49 +250,49 @@ public class RoomBooker {
 
     //This will take our details and add it to the Bookings table in our database
     private boolean addBooking() throws SQLException {
-            String st = startTimeHour.getValue() + ":" + startTimeMin.getValue();
-            String et = endTimeHour.getValue() + ":" + endTimeMin.getValue();
+        String st = startTimeHour.getValue() + ":" + startTimeMin.getValue();
+        String et = endTimeHour.getValue() + ":" + endTimeMin.getValue();
 
 
-            PreparedStatement ps = null;
-            String sql = "INSERT INTO Bookings(RoomID, UserID, Username, StartTime, EndTime, StartDate, EndDate, Resources, Refreshments, RefreshmentsTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            try{
-                Connection con =  DBConnection.getConnection();
-                assert con != null;
-                ps = con.prepareStatement(sql);
-                ps.setInt(1, roomSelector.getValue());
-                ps.setInt(2, LoginController.currentUser.getUserID());
-                ps.setString(3, LoginController.currentUser.getUsername());
-                ps.setString(4, st);
-                ps.setString(5, et);
-                ps.setString(6, datePicker.getValue().toString());
-                ps.setString(7, datePicker.getValue().toString());
-                ps.setString(8, resourcesTextField.getText());
-                ps.setString(9, refreshmentsArea.getText());
-                ps.setString(10, refreshmentsTimeBox.getText());
-                ps.execute();
+        PreparedStatement ps = null;
+        String sql = "INSERT INTO Bookings(RoomID, UserID, Username, StartTime, EndTime, StartDate, EndDate, Resources, Refreshments, RefreshmentsTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            Connection con = DBConnection.getConnection();
+            assert con != null;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, roomSelector.getValue());
+            ps.setInt(2, LoginController.currentUser.getUserID());
+            ps.setString(3, LoginController.currentUser.getUsername());
+            ps.setString(4, st);
+            ps.setString(5, et);
+            ps.setString(6, datePicker.getValue().toString());
+            ps.setString(7, datePicker.getValue().toString());
+            ps.setString(8, resourcesTextField.getText());
+            ps.setString(9, refreshmentsArea.getText());
+            ps.setString(10, refreshmentsTimeBox.getText());
+            ps.execute();
 
-                errorLabel.setText("");
-                return true;
-            }catch(Exception e){
-                System.out.println("Error: "+e);
-                return false;
-            }finally{
-                assert ps != null;
-                ps.close();
-            }
+            errorLabel.setText("");
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return false;
+        } finally {
+            assert ps != null;
+            ps.close();
+        }
     }
 
     //This method will check for any overlapping bookings from the already booked slots to the time slots we requested
-    public boolean checkBookings(){
+    public boolean checkBookings() {
         LocalTime selectedST = LocalTime.parse(startTimeHour.getValue() + ":" + startTimeMin.getValue());
         LocalTime selectedET = LocalTime.parse(endTimeHour.getValue() + ":" + endTimeMin.getValue());
 
         ArrayList<TimeSlot> requestingTS = TimeSlot.returnTimeSlots(selectedST, TimeSlot.getSlotNumber(selectedST, selectedET));
 
-        for(TimeSlot bs: this.bookedTimeSlots){
-            for(TimeSlot rs: requestingTS){
-                if(rs.exists(bs)){
+        for (TimeSlot bs : this.bookedTimeSlots) {
+            for (TimeSlot rs : requestingTS) {
+                if (rs.exists(bs)) {
                     return false;
                 }
             }
@@ -326,22 +325,22 @@ public class RoomBooker {
                 //This will check if something has been selected in the time combo boxes
                 if (startTimeHour.getValue() != null && startTimeMin.getValue() != null && endTimeHour.getValue() != null && endTimeMin.getValue() != null) {
                     //Checks resources field
-                    if(!refreshmentsArea.getText().isEmpty() && !refreshmentsTimeBox.getText().isEmpty()){
+                    if (!refreshmentsArea.getText().isEmpty() && !refreshmentsTimeBox.getText().isEmpty()) {
                         String[] refreshments = refreshmentsArea.getText().split("[,] ", 0);
                         String[] refreshmentTimes = refreshmentsTimeBox.getText().split("[,] ", 0);
-                        for(String x: refreshmentTimes){
+                        for (String x : refreshmentTimes) {
                             LocalTime.parse(x);
                         }
-                        if(refreshments.length == refreshmentTimes.length){
+                        if (refreshments.length == refreshmentTimes.length) {
                             errorLabel.setText("");
                             return true;
-                        }else{
+                        } else {
                             errorLabel.setText("Specify time for each refreshment");
                         }
-                    }else if(refreshmentsArea.getText().isEmpty() && refreshmentsTimeBox.getText().isEmpty()){
+                    } else if (refreshmentsArea.getText().isEmpty() && refreshmentsTimeBox.getText().isEmpty()) {
                         errorLabel.setText("");
                         return true;
-                    }else{
+                    } else {
                         errorLabel.setText("Enter both refreshment fields");
                     }
                 } else {
@@ -375,7 +374,7 @@ public class RoomBooker {
                 errorLabel.setText("End time cannot be before start time");
             } else if (endTimeHour.getValue().equals("22") && endTimeMin.getValue().equals("30")) {
                 errorLabel.setText("End time out of bounds!");
-            }else if (timeCompare == -1) {
+            } else if (timeCompare == -1) {
                 errorLabel.setText("");
                 return true;
             }
@@ -390,7 +389,7 @@ public class RoomBooker {
     //This method will make sure that the caterers are free to deliver the refreshments for the selected time.
     private boolean checkRefreshments() throws SQLException {
 
-        if(refreshmentsTimeBox.getText().isEmpty()){
+        if (refreshmentsTimeBox.getText().isEmpty()) {
             errorLabel.setText("");
             return true;
         }
@@ -402,7 +401,7 @@ public class RoomBooker {
         String sql = "SELECT * FROM Refreshments WHERE RoomID = ? AND Date = ?";
         ArrayList<LocalTime> results = new ArrayList<>();
 
-        try{
+        try {
             Connection con = DBConnection.getConnection();
             assert con != null;
             ps = con.prepareStatement(sql);
@@ -410,26 +409,39 @@ public class RoomBooker {
             ps.setString(2, datePicker.getValue().toString());
 
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 results.add(LocalTime.parse(rs.getString(3)));
             }
 
-            for(String x: refreshmentsTimes){
-                for(LocalTime existingRTS: results){
+            for (String x : refreshmentsTimes) {
+                for (LocalTime existingRTS : results) {
                     LocalTime rts = LocalTime.parse(x);
-                    if(rts.compareTo(existingRTS) == 0){
+                    if (rts.compareTo(existingRTS) == 0) {
                         return false;
                     }
                 }
             }
 
-            errorLabel.setText("");
-            addRefreshment();
-            return true;
-        }catch(SQLException e){
+            //To make sure that the time they give is actually withing the booked time;
+            for (String x : refreshmentsTimes) {
+                LocalTime st = LocalTime.parse(startTimeHour.getValue() + ":" + startTimeMin.getValue());
+                LocalTime et = LocalTime.parse(endTimeHour.getValue() + ":" + endTimeMin.getValue());
+                LocalTime rt = LocalTime.parse(x);
+
+                boolean condition1 = rt.isAfter(st);
+                boolean condition2 = rt.isBefore(et);
+
+                if (condition1 && condition2) {
+                    errorLabel.setText("");
+                    return addRefreshment();
+                }
+            }
+
+            return false;
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        }finally {
+        } finally {
             //To close the connection
             assert ps != null;
             ps.close();
@@ -438,15 +450,15 @@ public class RoomBooker {
         }
     }
 
-    public boolean addRefreshment() throws SQLException{
+    public boolean addRefreshment() throws SQLException {
         String[] refreshments = refreshmentsArea.getText().split("[,] ", 0);
         String[] refreshmentTimes = refreshmentsTimeBox.getText().split("[,] ", 0);
         PreparedStatement ps = null;
-        try{
+        try {
             Connection con = DBConnection.getConnection();
             String sql = "INSERT INTO Refreshments(RoomID, Date, Time, Refreshment) VALUES (?, ?, ?, ?)";
             assert con != null;
-            for (int x = 0; x<refreshments.length; x++) {
+            for (int x = 0; x < refreshments.length; x++) {
                 ps = con.prepareStatement(sql);
                 ps.setInt(1, roomSelector.getValue());
                 ps.setString(2, datePicker.getValue().toString());
@@ -456,11 +468,11 @@ public class RoomBooker {
             }
             errorLabel.setText("");
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             errorLabel.setText("Error adding refreshment details");
             System.out.println("Error: " + e);
             return false;
-        }finally {
+        } finally {
             assert ps != null;
             ps.close();
         }
@@ -470,7 +482,7 @@ public class RoomBooker {
 
     //This will return use to the customer dashboard.
     @FXML
-    private void backToDashboard(){
+    private void backToDashboard() {
         try {
             //We need to get the old stage, so we can close it before we go back to the login page
             Stage old = (Stage) backButton.getScene().getWindow();
@@ -491,4 +503,30 @@ public class RoomBooker {
 
     }
 
+    /*
+    To make sure that the rooms are always cleaned before someone books them we can do 2 things :
+    1. Make sure the room is cleaned before someone books the room
+    2.Clean the room after the end time and before someone else books the room
+    For this project I'm going to implement a simple system where it checks whether the room can be cleaned
+    either right after the endTime or right before the next booking of that room.
+     */
+
+    public boolean roomCleaned() throws SQLException {
+        String et = endTimeHour.getValue() + ":" + endTimeMin.getValue();
+        CleaningModel cleaner = new CleaningModel(et, datePicker.getValue());
+        cleaner.getCleanerTimes();
+        if(cleaner.isBooked()){
+            int roomID = roomSelector.getValue();
+            String date = datePicker.getValue().toString();
+            //Cleaner is booked, and we will try to see if the cleaner is busy even before the next room booking
+            if(cleaner.getNextBooking(roomID, date) != null){
+                cleaner.addCleanerBooking(roomID, (cleaner.getNextBooking(roomID, date)), datePicker.getValue());
+            }
+        }else{
+            //Cleaner is not booked, so we can add a cleaner booking for this time.
+            return cleaner.addCleanerBooking(roomSelector.getValue(), LocalTime.parse(et), datePicker.getValue());
+        }
+
+        return false;
+    }
 }

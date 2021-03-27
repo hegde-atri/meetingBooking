@@ -28,6 +28,13 @@ public class userBookings {
         this.resources = resources;
     }
 
+    public userBookings(int roomID, int userID, LocalTime startTime, LocalDate startDate) {
+        this.roomID = roomID;
+        this.userID = userID;
+        this.startTime = startTime;
+        this.startDate = startDate;
+    }
+
     public userBookings(int roomID, int userID, String username, LocalTime startTime, LocalTime endTime, LocalDate startDate, LocalDate endDate, String resources, String refreshments, String refreshmentsTime) {
         this.roomID = roomID;
         this.userID = userID;

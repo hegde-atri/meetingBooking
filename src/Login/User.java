@@ -5,26 +5,27 @@ package Login;
 public class User {
 
     private final int userID;
-    private final String username;
     private final String firstname;
     private final String lastname;
     private final String email;
+    private String username;
 
-    public User(int userID, String username, String firstname, String lastname, String email) {
+
+
+
+    public User(int userID, String firstname, String lastname, String email,String username) {
         this.userID = userID;
-        this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.username = username;
     }
 
     public int getUserID() {
         return userID;
     }
 
-    public String getUsername() {
-        return username;
-    }
+
 
     public String getFirstname() {
         return firstname;
@@ -36,5 +37,9 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getUsername(){
+        return username;
     }
 }
