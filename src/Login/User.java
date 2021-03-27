@@ -5,12 +5,14 @@ package Login;
 public class User {
 
     private final int userID;
+    private final String username;
     private final String firstname;
     private final String lastname;
     private final String email;
 
-    public User(int userID, String firstname, String lastname, String email) {
+    public User(int userID, String username, String firstname, String lastname, String email) {
         this.userID = userID;
+        this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -18,6 +20,10 @@ public class User {
 
     public int getUserID() {
         return userID;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getFirstname() {

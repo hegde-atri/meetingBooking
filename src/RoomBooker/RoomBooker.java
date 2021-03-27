@@ -1,6 +1,9 @@
 package RoomBooker;
 
+import Admin.userBookings;
 import DBUtil.DBConnection;
+import Login.LoginController;
+import Login.User;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -218,17 +221,18 @@ public class RoomBooker {
                 if(checkRefreshments()){
                     //Even after checking for overlapping bookings, we need to make sure that the cleaners are free at this time and can clean the room before the next booking
                     if(addBooking()){
+                        if (addRefreshment()) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Message");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Booking created!");
 
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Message");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Booking created!");
-
-                        alert.showAndWait().ifPresent((btnType) -> {
-                            if (btnType == ButtonType.OK) {
-                                backToDashboard();
-                            }
-                        });
+                            alert.showAndWait().ifPresent((btnType) -> {
+                                if (btnType == ButtonType.OK) {
+                                    backToDashboard();
+                                }
+                            });
+                        }
                     }else{
                         infoLabel.setText("Note that we need to clean the rooms once you are done\nTherefore some booking me be unavailable depending on\nour cleaners!");
                     }
@@ -246,10 +250,38 @@ public class RoomBooker {
     }
 
     //This will take our details and add it to the Bookings table in our database
-    private boolean addBooking(){
+    private boolean addBooking() throws SQLException {
+            String st = startTimeHour.getValue() + ":" + startTimeMin.getValue();
+            String et = endTimeHour.getValue() + ":" + endTimeMin.getValue();
 
 
-        return true;
+            PreparedStatement ps = null;
+            String sql = "INSERT INTO Bookings(RoomID, UserID, Username, StartTime, EndTime, StartDate, EndDate, Resources, Refreshments, RefreshmentsTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try{
+                Connection con =  DBConnection.getConnection();
+                assert con != null;
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, roomSelector.getValue());
+                ps.setInt(2, LoginController.currentUser.getUserID());
+                ps.setString(3, LoginController.currentUser.getUsername());
+                ps.setString(4, st);
+                ps.setString(5, et);
+                ps.setString(6, datePicker.getValue().toString());
+                ps.setString(7, datePicker.getValue().toString());
+                ps.setString(8, resourcesTextField.getText());
+                ps.setString(9, refreshmentsArea.getText());
+                ps.setString(10, refreshmentsTimeBox.getText());
+                ps.execute();
+
+                errorLabel.setText("");
+                return true;
+            }catch(Exception e){
+                System.out.println("Error: "+e);
+                return false;
+            }finally{
+                assert ps != null;
+                ps.close();
+            }
     }
 
     //This method will check for any overlapping bookings from the already booked slots to the time slots we requested
@@ -406,9 +438,32 @@ public class RoomBooker {
         }
     }
 
-    public void addRefreshment() throws SQLException{
+    public boolean addRefreshment() throws SQLException{
+        String[] refreshments = refreshmentsArea.getText().split("[,] ", 0);
+        String[] refreshmentTimes = refreshmentsTimeBox.getText().split("[,] ", 0);
         PreparedStatement ps = null;
-        String sql = "INSERT INTO Refreshments(RoomID, Date, Time, Refreshment) VALUES (?, ?, ?, ?)";
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "INSERT INTO Refreshments(RoomID, Date, Time, Refreshment) VALUES (?, ?, ?, ?)";
+            assert con != null;
+            for (int x = 0; x<refreshments.length; x++) {
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, roomSelector.getValue());
+                ps.setString(2, datePicker.getValue().toString());
+                ps.setString(3, refreshmentTimes[x]);
+                ps.setString(4, refreshments[x]);
+                ps.execute();
+            }
+            errorLabel.setText("");
+            return true;
+        }catch(Exception e){
+            errorLabel.setText("Error adding refreshment details");
+            System.out.println("Error: " + e);
+            return false;
+        }finally {
+            assert ps != null;
+            ps.close();
+        }
 
 
     }
