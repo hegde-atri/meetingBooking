@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="720.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cleaners.CleanersController">
    <children>
       <Label layoutX="271.0" layoutY="23.0" text="Cleaner's schedule" />
@@ -18,7 +17,7 @@
             <TableColumn fx:id="endTimeColumn" prefWidth="260.0" text="Clean End" />
         </columns>
       </TableView>
-      <DatePicker fx:id="datePicker" layoutX="452.0" layoutY="668.0" />
+      <DatePicker fx:id="datePicker" editable="false" layoutX="450.0" layoutY="668.0" />
       <Button fx:id="backButton" layoutX="14.0" layoutY="668.0" mnemonicParsing="false" onAction="#returnToAdmin" text="Back" />
       <Label layoutX="369.0" layoutY="672.0" text="Select date: " />
    </children>

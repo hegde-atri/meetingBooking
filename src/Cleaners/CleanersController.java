@@ -1,7 +1,9 @@
 package Cleaners;
 
+import Admin.AccountData;
 import DBUtil.DBConnection;
 import Login.User;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CleanersController {
     @FXML
@@ -30,11 +33,12 @@ public class CleanersController {
     @FXML
     private TableView<CleaningSlot> myTable;
     @FXML
-    private TableColumn<CleaningSlot, Integer> roomIDColumn;
+    private TableColumn<CleaningSlot, String> roomIDColumn;
     @FXML
     private TableColumn<CleaningSlot, String> startTimeColumn;
     @FXML
     private TableColumn<CleaningSlot, String> endTimeColumn;
+    private ObservableList<CleaningSlot> data;
 
     public void initialize() throws SQLException {
         initializeDatePicker();
@@ -60,41 +64,41 @@ public class CleanersController {
 
 
     //This will load the data onto the table for the selected date
+    @FXML
     private void loadTable() throws SQLException {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
         try{
-            ObservableList<CleaningSlot> data = null;
+            data = FXCollections.observableArrayList();
 
             String date = datePicker.getValue().toString();
-            String sql = "SELECT * FROM Bookings WHERE UserID = 2 AND StartDate = ?";
+            String sql = "SELECT * FROM Bookings WHERE UserID = ? AND StartDate = ?";
             Connection con = DBConnection.getConnection();
 
             assert con != null;
-            ps = con.prepareStatement(sql);
-            ps.setString(1, date);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, 2);
+            System.out.println(date);
+            ps.setString(2, date);
 
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                data.add(new CleaningSlot(rs.getInt(1), rs.getString(4), rs.getString(5)));
+                data.add(new CleaningSlot(rs.getString(1), rs.getString(4), rs.getString(5)));
             }
 
-            this.roomIDColumn.setCellValueFactory(new PropertyValueFactory<>("roomID"));
-            this.startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-            this.endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+            for(CleaningSlot x: data){
+                System.out.println(x.toString());
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+            this.roomIDColumn.setCellValueFactory(new PropertyValueFactory<CleaningSlot, String>("roomID"));
+            this.startTimeColumn.setCellValueFactory(new PropertyValueFactory<CleaningSlot, String>("startTime"));
+            this.endTimeColumn.setCellValueFactory(new PropertyValueFactory<CleaningSlot, String>("endTime"));
             //this will make sure that the data doesn't just get added onto the table as we check different dates
             //but will display the times for each day only
             this.myTable.setItems(null);
             this.myTable.setItems(data);
 
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            assert ps != null;
-            assert rs != null;
-            ps.close();
-            rs.close();
-        }
     }
 
 
