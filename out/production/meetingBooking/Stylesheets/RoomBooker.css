@@ -2,6 +2,7 @@
     -fx-background-color: lightblue;
 }
 
+/*<editor-fold desc="fields and .button">*/
 .button{
     -fx-text-fill: white;
 }
@@ -19,6 +20,9 @@
 .table-view{
     -fx-background-color: lightcyan;
 }
+/*</editor-fold>*/
+
+/*<editor-fold desc="labels">*/
 #tableLabel{
     -fx-font-weight: bold;
     -fx-font-size: 16;
@@ -32,7 +36,9 @@
     -fx-text-alignment: center;
     -fx-text-fill: darkred;
 }
+/*</editor-fold>*/
 
+/*<editor-fold desc="buttons">*/
 #bookButton{
     -fx-background-color: #00cbbb;
 }
@@ -60,3 +66,4 @@
     -fx-text-fill: black;
     -fx-font-weight: bold;
 }
+/*</editor-fold>*/

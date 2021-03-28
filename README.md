@@ -10,10 +10,12 @@
 - [ ] ~~Customer requests for room, and Admins approve the requests.~~  
 - [ ] ~~Greyed out buttons when room is unavailable.~~  
 - [ ] Stylize UI + Add tooltips.
-
+### Known mistakes (will be fixed soon)
+- Displays incorrect error message when trying to book a room.
+- Displays the booked time slots instead of the free time slots.
 ### A few shortcomings to take note of
-- Foreign keys are not used! This means carelessly deleting customer accounts might lead to errors in booking timings for any booings they have made in the future
-- Users privelige structure means that you need to be an admin to access the cleaner's and caterering timetable. This a security issue!
+- Foreign keys are not used! This means carelessly deleting customer accounts might lead to errors in booking timings for any bookings they have made in the future.
+- Users privilege structure means that you need to be an admin to access the cleaner's and catering timetable. This a security issue!
 - Passwords are not hashed/encrypted.
 
 ### The specifications for this program are as follows:
@@ -45,6 +47,7 @@ Room 5 | 50 people | false
 - Only Admin's can create new Admin accounts.
 - For demo purposes, the default Admin account has the username -  "owner" and password - "hello". (excluding the quotation marks.)
 - Timetables are automatically generated (for cleaners and caterers).
+- If you want to make it so that the user will be able to book for more than one day, the database is already compatible with this, therefore the only parts needed to change is the logic for booking rooms, and scheduling catering services.
 
 ### Notes to be taken from this project
 Some pointers so that I have a project plan next time before I start a project
@@ -52,3 +55,4 @@ Some pointers so that I have a project plan next time before I start a project
 - Think of the solution for the problem before you start to code.
 - Planned coding, as in code in the right order so that testing is smoother.
 - With no project plan, the project gets very sluggish after a few days.
+- Planning and then coding = 1000x faster.
