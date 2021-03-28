@@ -80,7 +80,7 @@ public class CleaningModel {
             ps = con.prepareStatement(sql);
             ps.setInt(1, roomID);
             ps.setInt(2, 2);
-            ps.setString(3, "");
+            ps.setString(3, "CLEANER");
             ps.setString(4, st.toString());
             ps.setString(5, et.toString());
             ps.setString(6, date.toString());
@@ -98,8 +98,8 @@ public class CleaningModel {
     }
 
     //This method will return the next closest booking of the room to see if the room can be cleaned before then.
-    public LocalTime getNextBooking(int roomID, String sd){
-        String sql = "SELECT * FROM Bookings WHERE RoomID = ? AND StartDate = ? ORDER BY StartTime ASC";
+    public LocalTime getNextBooking(String sd){
+        String sql = "SELECT * FROM Bookings WHERE StartDate = ? ORDER BY StartTime ASC";
         try{
             Connection con = DBConnection.getConnection();
             PreparedStatement ps = null;
@@ -108,7 +108,7 @@ public class CleaningModel {
 
             assert con != null;
             ps = con.prepareStatement(sql);
-            ps.setInt(1, roomID);
+            ps.setString(1, sd);
             rs = ps.executeQuery();
             while(rs.next()){
                 ub.add(new userBookings(rs.getInt(1), rs.getInt(2), LocalTime.parse(rs.getString(4)), LocalDate.parse(rs.getString(6))));
@@ -116,7 +116,7 @@ public class CleaningModel {
 
             //Since the result set is ordered we will get the immediate booking and not just a booking with a later time.
             if(ub.size()>1){
-                return getNextCleanerFree(roomID, sd);
+                return getNextCleanerFree(sd);
             }else{
                 for(userBookings x: ub){
                     if(x.getStartTime().isAfter(startTime)){
@@ -132,8 +132,8 @@ public class CleaningModel {
     }
 
     //If there are no booking for the room in the day, then we will just get whenever the cleaner is next free
-    private LocalTime getNextCleanerFree(int roomID, String startDate){
-        String sql = "SELECT * FROM Bookings WHERE RoomID = ? AND UserID = ? AND StartDate = ? ORDER BY EndTime DESC";
+    private LocalTime getNextCleanerFree(String startDate){
+        String sql = "SELECT * FROM Bookings WHERE UserID = ? AND StartDate = ? ORDER BY EndTime DESC";
         try {
             Connection con = DBConnection.getConnection();
             PreparedStatement ps = null;
@@ -142,9 +142,8 @@ public class CleaningModel {
 
             assert con != null;
             ps = con.prepareStatement(sql);
-            ps.setInt(1, roomID);
-            ps.setInt(2, 2);
-            ps.setString(3, startDate);
+            ps.setInt(1, 2);
+            ps.setString(2, startDate);
             rs = ps.executeQuery();
             while (rs.next()) {
                 ub.add(new userBookings(rs.getInt(1), rs.getInt(2), LocalTime.parse(rs.getString(4)), LocalDate.parse(rs.getString(6))));

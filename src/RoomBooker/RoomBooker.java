@@ -238,6 +238,8 @@ public class RoomBooker {
                         } else {
                             infoLabel.setText("Note that we need to clean the rooms once you are done\nTherefore some booking me be unavailable depending on\nour cleaners!");
                         }
+                    }else{
+                        errorLabel.setText("Error with cleaners");
                     }
                 } else {
                     errorLabel.setText("Time selected for refreshments is unfortunately busy");
@@ -524,14 +526,15 @@ public class RoomBooker {
             int roomID = roomSelector.getValue();
             String date = datePicker.getValue().toString();
             //Cleaner is booked, and we will try to see if the cleaner is busy even before the next room booking
-            if(cleaner.getNextBooking(roomID, date) != null){
-                cleaner.addCleanerBooking(roomID, (cleaner.getNextBooking(roomID, date)), datePicker.getValue());
+            if(cleaner.getNextBooking(date) != null){
+                cleaner.addCleanerBooking(roomID, (cleaner.getNextBooking(date)), datePicker.getValue());
+                return true;
+            }else{
+                return false;
             }
         }else{
             //Cleaner is not booked, so we can add a cleaner booking for this time.
             return cleaner.addCleanerBooking(roomSelector.getValue(), LocalTime.parse(et), datePicker.getValue());
         }
-
-        return false;
     }
 }
