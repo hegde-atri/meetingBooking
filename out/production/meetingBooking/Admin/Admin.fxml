@@ -23,7 +23,7 @@
          <tooltip>
             <Tooltip text="Goes back to login page" />
          </tooltip></Button>
-      <Button layoutX="23.0" layoutY="406.0" mnemonicParsing="false" text="View full schedule" />
+      <Button fx:id="viewFullScheduleButton" layoutX="23.0" layoutY="406.0" mnemonicParsing="false" text="View full schedule" />
       <PieChart fx:id="chart" prefHeight="380.0" prefWidth="380.0" />
       <TableView fx:id="myTable" layoutX="380.0" layoutY="40.0" prefHeight="680.0" prefWidth="900.0" AnchorPane.topAnchor="40.0">
         <columns>

@@ -14,6 +14,7 @@ title __REGISTER's Class Diagram__\n
         - passwordField : PasswordField
         - registerButton : Button
         - usernameField : TextField
+        - verifyPasswordField : PasswordField
         + backToLogin()
         + checkFormat()
         + registerLogic()

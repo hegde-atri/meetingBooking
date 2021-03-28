@@ -26,7 +26,6 @@ title __CUSTOMER's Class Diagram__\n
         + setRefreshmentsTime()
         + setRoomID()
         + setTimePeriod()
-        + toString()
     }
   }
   
@@ -35,19 +34,23 @@ title __CUSTOMER's Class Diagram__\n
     class Customer.CustomerController {
         - backButton : Button
         - currentBookingsLabel : Label
-        - data : ObservableList<CustomerBooking>
-        - dateColumn : TableColumn<CustomerBooking, String>
-        - durationColumn : TableColumn<CustomerBooking, Integer>
-        - equipmentColumn : TableColumn<CustomerBooking, String>
-        - myTable : TableView<CustomerBooking>
-        - refreshmentsColumn : TableColumn<CustomerBooking, String>
-        - refreshmentsTimeColumn : TableColumn<CustomerBooking, String>
-        - roomIDColumn : TableColumn<CustomerBooking, Integer>
-        - timePeriodColumn : TableColumn<CustomerBooking, String>
+        - data : ObservableList<userBookings>
+        - endDateColumn : TableColumn<userBookings, String>
+        - endTimeColumn : TableColumn<userBookings, String>
+        - myTable : TableView<userBookings>
+        - newBookingButton : Button
+        - refreshmentsColumn : TableColumn<userBookings, String>
+        - refreshmentsTimeColumn : TableColumn<userBookings, String>
+        - resourcesColumn : TableColumn<userBookings, String>
+        - roomIDColumn : TableColumn<userBookings, Integer>
+        - startDateColumn : TableColumn<userBookings, String>
+        - startTimeColumn : TableColumn<userBookings, String>
         - welcomeLabel : Label
         + backToLogin()
+        + deleteBooking()
         + initialize()
         + loadBookingData()
+        - newBooking()
     }
   }
   

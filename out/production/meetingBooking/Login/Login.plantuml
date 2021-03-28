@@ -48,11 +48,13 @@ title __LOGIN's Class Diagram__\n
         - firstname : String
         - lastname : String
         - userID : int
+        - username : String
         + User()
         + getEmail()
         + getFirstname()
         + getLastname()
         + getUserID()
+        + getUsername()
     }
   }
   

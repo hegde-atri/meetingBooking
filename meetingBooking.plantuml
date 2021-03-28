@@ -9,7 +9,37 @@ title __MEETINGBOOKING's Class Diagram__\n
   
 
   namespace Admin {
+    class Admin.AccountData {
+    }
+  }
+  
+
+  namespace Admin {
     class Admin.AdminController {
+    }
+  }
+  
+
+  namespace Admin {
+    class Admin.AdminController {
+    }
+  }
+  
+
+  namespace Admin {
+    class Admin.AdminController {
+    }
+  }
+  
+
+  namespace Admin {
+    class Admin.AdminController {
+    }
+  }
+  
+
+  namespace Admin {
+    class Admin.adminCreation {
     }
   }
   
@@ -26,6 +56,24 @@ title __MEETINGBOOKING's Class Diagram__\n
   }
   
 
+  namespace Admin {
+    class Admin.userBookings {
+    }
+  }
+  
+
+  namespace Admin {
+    class Admin.userBookings {
+    }
+  }
+  
+
+  namespace Caterers {
+    class Caterers.CatererModel {
+    }
+  }
+  
+
   namespace Caterers {
     class Caterers.CaterersController {
     }
@@ -38,8 +86,68 @@ title __MEETINGBOOKING's Class Diagram__\n
   }
   
 
+  namespace Cleaners {
+    class Cleaners.CleaningModel {
+    }
+  }
+  
+
+  namespace Cleaners {
+    class Cleaners.CleaningModel {
+    }
+  }
+  
+
   namespace Customer {
     class Customer.CustomerBooking {
+    }
+  }
+  
+
+  namespace Customer {
+    class Customer.CustomerBooking {
+    }
+  }
+  
+
+  namespace Customer {
+    class Customer.CustomerBooking {
+    }
+  }
+  
+
+  namespace Customer {
+    class Customer.CustomerBooking {
+    }
+  }
+  
+
+  namespace Customer {
+    class Customer.CustomerBooking {
+    }
+  }
+  
+
+  namespace Customer {
+    class Customer.CustomerBooking {
+    }
+  }
+  
+
+  namespace Customer {
+    class Customer.CustomerBooking {
+    }
+  }
+  
+
+  namespace Customer {
+    class Customer.CustomerController {
+    }
+  }
+  
+
+  namespace Customer {
+    class Customer.CustomerController {
     }
   }
   
@@ -69,7 +177,49 @@ title __MEETINGBOOKING's Class Diagram__\n
   
 
   namespace Login {
+    class Login.LoginController {
+    }
+  }
+  
+
+  namespace Login {
+    class Login.LoginController {
+    }
+  }
+  
+
+  namespace Login {
     class Login.LoginModel {
+    }
+  }
+  
+
+  namespace Login {
+    class Login.LoginModel {
+    }
+  }
+  
+
+  namespace Login {
+    class Login.LoginModel {
+    }
+  }
+  
+
+  namespace Login {
+    class Login.LoginModel {
+    }
+  }
+  
+
+  namespace Login {
+    class Login.User {
+    }
+  }
+  
+
+  namespace Login {
+    class Login.User {
     }
   }
   
@@ -86,13 +236,47 @@ title __MEETINGBOOKING's Class Diagram__\n
   }
   
 
+  namespace Register {
+    class Register.RegisterController {
+    }
+  }
+  
+
+  namespace RoomBooker {
+    class RoomBooker.Refreshment {
+    }
+  }
+  
+
   namespace RoomBooker {
     class RoomBooker.RoomBooker {
     }
   }
   
 
+  namespace RoomBooker {
+    class RoomBooker.RoomBooker {
+    }
+  }
+  
+
+  namespace RoomBooker {
+    class RoomBooker.RoomBooker {
+    }
+  }
+  
+
+  namespace RoomBooker {
+    class RoomBooker.TimeSlot {
+    }
+  }
+  
+
   Login.Login -up-|> javafx.application.Application
+  Login.LoginController .up.|> javafx.fxml.Initializable
+  Login.LoginController o-- Login.LoginModel : loginModel
+  Login.LoginController .up.|> javafx.fxml.Initializable
+  Login.LoginController o-- Login.LoginModel : loginModel
   Login.LoginController .up.|> javafx.fxml.Initializable
   Login.LoginController o-- Login.LoginModel : loginModel
 

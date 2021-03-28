@@ -38,6 +38,8 @@ public class RegisterController {
     @FXML
     private PasswordField passwordField;
     @FXML
+    private PasswordField verifyPasswordField;
+    @FXML
     private TextField emailField;
     //</editor-fold>
 
@@ -97,25 +99,30 @@ public class RegisterController {
     public void registerUser() throws SQLException {
         try {
 
-            if (usernameField.getText() != null
-                    && firstNameField.getText() != null
-                    && lastNameField.getText() != null
-                    && emailField.getText() != null
-                    && passwordField.getText() != null) {
+            if (!usernameField.getText().isEmpty()
+                    && !firstNameField.getText().isEmpty()
+                    && !lastNameField.getText().isEmpty()
+                    && !emailField.getText().isEmpty()
+                    && !passwordField.getText().isEmpty()
+                    && !verifyPasswordField.getText().isEmpty()) {
                 if (checkFormat()) {
-                    if (registerLogic(usernameField.getText(), firstNameField.getText(), lastNameField.getText(), passwordField.getText(), emailField.getText())) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Message");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Account created!");
+                    if (passwordField.getText().equals(verifyPasswordField.getText())) {
+                        if (registerLogic(usernameField.getText(), firstNameField.getText(), lastNameField.getText(), passwordField.getText(), emailField.getText())) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Message");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Account created!");
 
-                        alert.showAndWait().ifPresent((btnType) -> {
-                            if (btnType == ButtonType.OK) {
-                                backToLogin();
-                            }
-                        });
-                    }else{
-                        errorLabel.setText("Account cannot be created with current details");
+                            alert.showAndWait().ifPresent((btnType) -> {
+                                if (btnType == ButtonType.OK) {
+                                    backToLogin();
+                                }
+                            });
+                        }else{
+                            errorLabel.setText("Account cannot be created with current details");
+                        }
+                    } else {
+                        errorLabel.setText("Passwords do not match!");
                     }
 
                 } else {

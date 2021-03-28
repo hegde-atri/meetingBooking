@@ -3,6 +3,12 @@
 title __CATERERS's Class Diagram__\n
 
   namespace Caterers {
+    class Caterers.CatererModel {
+    }
+  }
+  
+
+  namespace Caterers {
     class Caterers.CaterersController {
     }
   }

@@ -8,6 +8,21 @@ title __CLEANERS's Class Diagram__\n
   }
   
 
+  namespace Cleaners {
+    class Cleaners.CleaningModel {
+        - bookedTimes : ArrayList<userBookings>
+        - startDate : LocalDate
+        - startTime : LocalTime
+        + CleaningModel()
+        + addCleanerBooking()
+        + getCleanerTimes()
+        + getNextBooking()
+        + isBooked()
+        - getNextCleanerFree()
+    }
+  }
+  
+
 
 
 right footer

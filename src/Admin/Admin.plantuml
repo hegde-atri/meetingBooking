@@ -131,6 +131,7 @@ title __ADMIN's Class Diagram__\n
         + setUsername()
         + userBookings()
         + userBookings()
+        + userBookings()
     }
   }
   

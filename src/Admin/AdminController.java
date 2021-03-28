@@ -36,6 +36,8 @@ public class AdminController {
     @FXML
     private Button addAdminButton;
     @FXML
+    private Button viewFullScheduleButton;
+    @FXML
     private Label backgroundLabel;
     @FXML
     private Label dbSizeLabel;
@@ -191,11 +193,16 @@ public class AdminController {
     }
 
     //Delete all booking details before today.
-    public void clearUpDB(){
+    @FXML
+    private void clearUpDB(){
         try {
+            //removes old data from bookings table
             String sql = "DELETE FROM Bookings WHERE EndDate <= date('now','-1 day')";
             Connection con = DBConnection.getConnection();
             assert con != null;
+            con.createStatement().execute(sql);
+            //removes old data from Refreshments table
+            sql = "DELETE FROM Refreshments WHERE Date <= date('now','-1 day')";
             con.createStatement().execute(sql);
         }catch(SQLException e){
             System.out.println("Error: " + e);
@@ -204,9 +211,10 @@ public class AdminController {
     }
 
     //<editor-fold desc="methods that open different windows">
+
     //redirects you back to login
     @FXML
-    public void backToLogin() {
+    private void backToLogin() {
         try {
             Stage old = (Stage) cleanersDashboardButton.getScene().getWindow();
             Stage stage = new Stage();
@@ -227,14 +235,16 @@ public class AdminController {
     }
 
     //Closes the current window and opens the cleaners dashboard
-    public void openCleanersDashboard() {
+    @FXML
+    private void openCleanersDashboard() {
         try {
             Stage old = (Stage) cleanersDashboardButton.getScene().getWindow();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Cleaners/Cleaners.fxml").openStream());
-            Scene scene = new Scene(root, 1280, 720);
+            Scene scene = new Scene(root, 640, 720);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Cleaners.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/cleaners.png"));
             stage.setScene(scene);
             stage.setTitle("Cleaners Dashboard");
             stage.setResizable(false);
@@ -247,7 +257,8 @@ public class AdminController {
     }
 
     //Closes the current window and opens the caterers dashboard
-    public void openCaterersDashboard() {
+    @FXML
+    private void openCaterersDashboard() {
         try {
             Stage old = (Stage) caterersDashboardButton.getScene().getWindow();
             Stage stage = new Stage();
@@ -255,6 +266,7 @@ public class AdminController {
             Parent root = loader.load(getClass().getResource("/Caterers/Caterers.fxml").openStream());
             Scene scene = new Scene(root, 640, 360);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Caterers.css").toExternalForm());
+            stage.getIcons().add(new Image("/images/caterers.png"));
             stage.setScene(scene);
             stage.setTitle("Caterers Dashboard");
             stage.setResizable(false);

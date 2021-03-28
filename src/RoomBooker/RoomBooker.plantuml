@@ -3,7 +3,81 @@
 title __ROOMBOOKER's Class Diagram__\n
 
   namespace RoomBooker {
+    class RoomBooker.Refreshment {
+        - RoomID : int
+        - date : LocalDate
+        - refreshment : String
+        - time : LocalTime
+        + Refreshment()
+        + Refreshment()
+        + getDate()
+        + getRefreshment()
+        + getRoomID()
+        + getTime()
+        + setDate()
+        + setRefreshment()
+        + setRoomID()
+        + setTime()
+    }
+  }
+  
+
+  namespace RoomBooker {
     class RoomBooker.RoomBooker {
+        - backButton : Button
+        - backgroundLabel : Label
+        - bookButton : Button
+        - bookedTimeSlots : ArrayList<TimeSlot>
+        - datePicker : DatePicker
+        - endTimeColumn : TableColumn<TimeSlot, String>
+        - endTimeHour : ComboBox
+        - endTimeMin : ComboBox
+        - errorLabel : Label
+        - infoLabel : Label
+        - myTable : TableView<TimeSlot>
+        - refreshButton : Button
+        - refreshmentsArea : TextArea
+        - refreshmentsTimeBox : TextField
+        - resourcesTextField : TextField
+        - roomDescriptionBox : TextArea
+        - roomSelector : Spinner<Integer>
+        - startTimeColumn : TableColumn<TimeSlot, String>
+        - startTimeHour : ComboBox
+        - startTimeMin : ComboBox
+        - tableLabel : Label
+        + addRefreshment()
+        + checkBookings()
+        + initialize()
+        + initializeComboBox()
+        + initializeSpinner()
+        + roomCleaned()
+        + setDateBounds()
+        + setTableView()
+        + verifyFields()
+        - addBooking()
+        - backToDashboard()
+        - bookRoom()
+        - checkRefreshments()
+        - verifyBookTimes()
+        - verifyFieldsNull()
+    }
+  }
+  
+
+  namespace RoomBooker {
+    class RoomBooker.TimeSlot {
+        - endTime : LocalTime
+        - startTime : LocalTime
+        + TimeSlot()
+        {static} + createTimeSlots()
+        + exists()
+        + getEndTime()
+        {static} + getSlotNumber()
+        + getStartTime()
+        {static} + returnTimeSlots()
+        + setEndTime()
+        + setStartTime()
+        + toString()
     }
   }
   
