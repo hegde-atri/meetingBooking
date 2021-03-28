@@ -68,7 +68,6 @@ public class CleanersController {
     private void loadTable() throws SQLException {
         try{
             data = FXCollections.observableArrayList();
-
             String date = datePicker.getValue().toString();
             String sql = "SELECT * FROM Bookings WHERE UserID = ? AND StartDate = ?";
             Connection con = DBConnection.getConnection();

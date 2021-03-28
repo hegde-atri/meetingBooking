@@ -20,4 +20,16 @@ public class CleaningSlot {
     public String toString(){
         return this.roomID + " "+ this.startTime + " " + this.endTime;
     }
+
+    public String getRoomID() {
+        return roomID;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
 }
