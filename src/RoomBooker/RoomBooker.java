@@ -1,4 +1,9 @@
 package RoomBooker;
+/*
+IMPORTANT TO DO
+!!!!!add method so that user cant book into 2 rooms at the same time!!!!!!!
+ */
+
 
 import Cleaners.CleaningModel;
 import DBUtil.DBConnection;

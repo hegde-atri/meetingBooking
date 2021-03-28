@@ -91,9 +91,9 @@ public class CleanersController {
         }catch(Exception e){
             e.printStackTrace();
         }
-            this.roomIDColumn.setCellValueFactory(new PropertyValueFactory<CleaningSlot, String>("roomID"));
-            this.startTimeColumn.setCellValueFactory(new PropertyValueFactory<CleaningSlot, String>("startTime"));
-            this.endTimeColumn.setCellValueFactory(new PropertyValueFactory<CleaningSlot, String>("endTime"));
+            this.roomIDColumn.setCellValueFactory(new PropertyValueFactory<>("roomID"));
+            this.startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+            this.endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
             //this will make sure that the data doesn't just get added onto the table as we check different dates
             //but will display the times for each day only
             this.myTable.setItems(null);
