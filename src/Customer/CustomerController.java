@@ -46,8 +46,8 @@ public class CustomerController {
     private TableColumn<userBookings, String> endTimeColumn;
     @FXML
     private TableColumn<userBookings, String> startDateColumn;
-    @FXML
-    private TableColumn<userBookings, String> endDateColumn;
+//    @FXML for multi day bookings
+//    private TableColumn<userBookings, String> endDateColumn;
     @FXML
     private TableColumn<userBookings, String> resourcesColumn;
     @FXML
@@ -90,7 +90,8 @@ public class CustomerController {
         this.startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         this.endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         this.startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        this.endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        //to be used if multi day bookings are implemented
+//        this.endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         this.resourcesColumn.setCellValueFactory(new PropertyValueFactory<>("resources"));
         this.refreshmentsColumn.setCellValueFactory(new PropertyValueFactory<>("refreshments"));
         this.refreshmentsTimeColumn.setCellValueFactory(new PropertyValueFactory<>("refreshmentsTime"));

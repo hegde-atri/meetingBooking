@@ -20,6 +20,9 @@
 .table-view{
     -fx-background-color: lightcyan;
 }
+.label{
+    -fx-font-weight: bold;
+}
 /*</editor-fold>*/
 
 /*<editor-fold desc="labels">*/

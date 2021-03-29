@@ -6,22 +6,22 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Customer.CustomerController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Customer.CustomerController">
    <children>
-      <TableView fx:id="myTable" layoutX="646.0" layoutY="43.0" prefHeight="650.0" prefWidth="951.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <columns>
-            <TableColumn fx:id="roomIDColumn" prefWidth="75.0" text="Room No." />
-            <TableColumn fx:id="startTimeColumn" prefWidth="84.0" text="Start time" />
+      <TableView fx:id="myTable" layoutX="250.0" layoutY="252.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0">
+        <columns>
+          <TableColumn fx:id="roomIDColumn" prefWidth="65.0" text="Room ID" />
+          <TableColumn fx:id="startDateColumn" prefWidth="107.0" text="Date" />
+            <TableColumn fx:id="startTimeColumn" prefWidth="94.0" text="Start time" />
             <TableColumn fx:id="endTimeColumn" prefWidth="95.0" text="End time" />
-            <TableColumn fx:id="startDateColumn" prefWidth="88.0" text="Start date" />
-            <TableColumn fx:id="endDateColumn" prefWidth="84.0" text="End date" />
-            <TableColumn fx:id="resourcesColumn" prefWidth="156.0" text="Resources" />
-            <TableColumn fx:id="refreshmentsColumn" prefWidth="155.0" text="Refreshments" />
-            <TableColumn fx:id="refreshmentsTimeColumn" prefWidth="213.0" text="Refreshments Time" />
-         </columns>
+            <TableColumn fx:id="resourcesColumn" prefWidth="196.0" text="Resources" />
+            <TableColumn fx:id="refreshmentsColumn" prefWidth="153.0" text="Refreshments" />
+            <TableColumn fx:id="refreshmentsTimeColumn" prefWidth="159.0" text="Refreshments Time" />
+        </columns>
          <contextMenu>
             <ContextMenu>
               <items>
@@ -30,11 +30,16 @@
             </ContextMenu>
          </contextMenu>
       </TableView>
-      <Label fx:id="currentBookingsLabel" layoutX="754.0" layoutY="32.0" text="Current bookings" />
-      <Button fx:id="newBookingButton" layoutX="110.0" layoutY="427.0" mnemonicParsing="false" onAction="#newBooking" text="Book a room" />
-      <Button layoutX="124.0" layoutY="383.0" mnemonicParsing="false" onAction="#initialize" text="Refresh" />
-      <Button fx:id="backButton" layoutX="132.0" layoutY="500.0" mnemonicParsing="false" onAction="#backToLogin" text="Back" />
-      <Label fx:id="welcomeLabel" layoutX="73.0" layoutY="83.0" prefHeight="18.0" prefWidth="164.0" />
-      <TextArea layoutX="55.0" layoutY="238.0" prefHeight="122.0" prefWidth="200.0" />
+      <Label fx:id="welcomeLabel" alignment="CENTER" layoutX="255.0" layoutY="22.0" prefHeight="17.0" prefWidth="390.0" />
+      <Button fx:id="newBookingButton" layoutX="801.0" layoutY="684.0" mnemonicParsing="false" onAction="#newBooking" text="Book a room">
+         <tooltip>
+            <Tooltip text="Make a new booking" />
+         </tooltip>
+      </Button>
+      <Button fx:id="backButton" layoutX="14.0" layoutY="684.0" mnemonicParsing="false" onAction="#backToLogin" text="Back">
+         <tooltip>
+            <Tooltip text="Takes you back to customer dashboard" />
+         </tooltip>
+      </Button>
    </children>
 </AnchorPane>

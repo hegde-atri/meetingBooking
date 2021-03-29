@@ -28,10 +28,10 @@
 }
 #registerButton{
     -fx-text-fill: white;
-    -fx-background-color: blue;
+    -fx-background-color: teal;
 }
 #registerButton:hover{
-    -fx-background-color: cyan;
+    -fx-background-color: turquoise;
     -fx-font-weight: bold;
 }
 /*</editor-fold>*/

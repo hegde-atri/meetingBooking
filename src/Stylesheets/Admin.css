@@ -40,7 +40,7 @@
     -fx-background-color: green;
 }
 #addAdminButton:hover{
-    -fx-background-color: darkgreen;
+    -fx-background-color: lightgreen;
 }
 #reloadButton{
     -fx-background-color: darkgrey;

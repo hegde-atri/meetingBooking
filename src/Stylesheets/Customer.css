@@ -1,0 +1,25 @@
+.root{
+    -fx-background-color: lightblue;
+}
+
+#welcomeLabel{
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}
+
+#newBookingButton{
+    -fx-background-color: darkgreen;
+    -fx-text-fill: white;
+}
+#newBookingButton:hover{
+    -fx-background-color: lightgreen;
+    -fx-text-fill: black;
+}
+#backButton{
+    -fx-background-color: teal;
+    -fx-text-fill: white;
+}
+#backButton:hover{
+    -fx-background-color: turquoise;
+    -fx-text-fill: black;
+}

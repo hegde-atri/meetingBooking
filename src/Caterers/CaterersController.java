@@ -37,7 +37,7 @@ public class CaterersController {
     private TableColumn<CatererModel, String> refreshmentColumn;
 
 
-    public void initialize(){
+    public void initialize() throws SQLException {
         initializeDatePicker();
         loadTable();
 
@@ -48,11 +48,17 @@ public class CaterersController {
         datePicker.setValue(today);
 
         datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
+            try {
                 loadTable();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
     }
 
-    private void loadTable(){
+    private void loadTable() throws SQLException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
             ObservableList<CatererModel> data = FXCollections.observableArrayList();
             String date = datePicker.getValue().toString();
@@ -60,9 +66,9 @@ public class CaterersController {
 
             Connection con = DBConnection.getConnection();
             assert con != null;
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setString(1, date);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
 
             while(rs.next()){
                 data.add(new CatererModel(rs.getString(1), rs.getString(3), rs.getString(4)));
@@ -77,9 +83,11 @@ public class CaterersController {
 
             //Here i was going to make sure i close the connection by calling the method ps and rs .close() but for now it doesn't really matter
 
-
         }catch(Exception e){
             e.printStackTrace();
+        }finally {
+            ps.close();
+            rs.close();
         }
     }
 

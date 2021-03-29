@@ -109,7 +109,7 @@ public class LoginController implements Initializable {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Customer/Customer.fxml").openStream());
-            Scene scene = new Scene(root, 1280, 720);
+            Scene scene = new Scene(root, 900, 720);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Customer.css").toExternalForm());
             stage.getIcons().add(new Image("/images/customer.png"));
             stage.setScene(scene);
