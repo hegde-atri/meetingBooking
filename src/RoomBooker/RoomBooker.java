@@ -1,7 +1,7 @@
 package RoomBooker;
 /*
 IMPORTANT TO DO
-!!!!!add method so that user cant book into 2 rooms at the same time!!!!!!!
+bookings checker is immune to bookings that have earlier start and later end times!!
  */
 
 
@@ -21,10 +21,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -79,6 +76,7 @@ public class RoomBooker {
     public void initialize() throws SQLException {
         LocalDate today = LocalDate.now();
         datePicker.setValue(today);
+        infoLabel.setWrapText(true);
         initializeComboBox();
         initializeSpinner();
         setDateBounds();
@@ -92,6 +90,8 @@ public class RoomBooker {
         roomDescriptionBox.setText("Room 1\nAccommodation size - 2 people\nDisabled access - false");
         roomSelector.valueProperty().addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> {
             if (newValue.intValue() == 1) {
+                errorLabel.setText("");
+                infoLabel.setText("");
                 roomDescriptionBox.setText("Room 1\nAccommodation size - 2 people\nDisabled access - false");
                 try {
                     setTableView();
@@ -99,6 +99,8 @@ public class RoomBooker {
                     e.printStackTrace();
                 }
             } else if (newValue.intValue() == 2) {
+                errorLabel.setText("");
+                infoLabel.setText("");
                 roomDescriptionBox.setText("Room 2\nAccommodation size - 4 people\nDisabled access - false");
                 try {
                     setTableView();
@@ -106,6 +108,8 @@ public class RoomBooker {
                     e.printStackTrace();
                 }
             } else if (newValue.intValue() == 3) {
+                errorLabel.setText("");
+                infoLabel.setText("");
                 roomDescriptionBox.setText("Room 3\nAccommodation size - 8 people\nDisabled access - false");
                 try {
                     setTableView();
@@ -113,6 +117,8 @@ public class RoomBooker {
                     e.printStackTrace();
                 }
             } else if (newValue.intValue() == 4) {
+                errorLabel.setText("");
+                infoLabel.setText("");
                 roomDescriptionBox.setText("Room 4\nAccommodation size - 15 people\nDisabled access - true");
                 try {
                     setTableView();
@@ -120,6 +126,8 @@ public class RoomBooker {
                     e.printStackTrace();
                 }
             } else if (newValue.intValue() == 5) {
+                errorLabel.setText("");
+                infoLabel.setText("");
                 roomDescriptionBox.setText("Room 5\nAccommodation size - 50 people\nDisabled access - false");
                 try {
                     setTableView();
@@ -238,7 +246,9 @@ public class RoomBooker {
                                     }
                                 });
                             } else {
-                                infoLabel.setText("Note that we need to clean the rooms once you are done\nTherefore some booking me be unavailable depending on\nour cleaners!");
+                                infoLabel.setText("Note that we need to clean the rooms once you are done\n" +
+                                        "Therefore some booking me be unavailable depending on\n" +
+                                        "our cleaners!");
                             }
                         }else{
                             errorLabel.setText("Error with cleaners");
@@ -304,6 +314,7 @@ public class RoomBooker {
 
         ArrayList<TimeSlot> requestingTS = TimeSlot.returnTimeSlots(selectedST, TimeSlot.getSlotNumber(selectedST, selectedET));
 
+        //this.bookedTimeSlots is set data in the table view method
         for (TimeSlot bs : this.bookedTimeSlots) {
             for (TimeSlot rs : requestingTS) {
                 if (rs.exists(bs)) {
@@ -517,8 +528,56 @@ public class RoomBooker {
 
     }
 
-    private boolean checkDouble(){
-        return true;
+    private boolean checkDouble() throws SQLException {
+        PreparedStatement ps =null;
+        ResultSet rs=null;
+        String sql = "SELECT * FROM Bookings WHERE UserID = ? and StartDate = ?";
+        String date = datePicker.getValue().toString();
+        LocalTime startTime = LocalTime.parse(startTimeHour.getValue() + ":" + startTimeMin.getValue());
+        LocalTime endTime = LocalTime.parse(endTimeHour.getValue() + ":" + endTimeMin.getValue());
+        ArrayList<TimeSlot> userBookings = new ArrayList<>();
+        try{
+            Connection con = DBConnection.getConnection();
+            assert con != null;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, LoginController.currentUser.getUserID());
+            ps.setString(2, date);
+
+            ArrayList<TimeSlot> slicedUB = new ArrayList<>();
+
+            rs = ps.executeQuery();
+            while(rs.next()){
+                userBookings.add(new TimeSlot(rs.getString(4), rs.getString(5)));
+            }
+            //Now we are going to split all objects in the userBookings arraylist into 30 min timeslots
+            for(TimeSlot x: userBookings){
+                slicedUB.addAll(TimeSlot.returnTimeSlots(x.getStartTime(), TimeSlot.getSlotNumber(x.getStartTime(), x.getEndTime())));
+            }
+
+
+            for(TimeSlot x: slicedUB){
+                boolean condition1 = startTime.isAfter(x.getStartTime());
+                boolean condition2 = startTime.isBefore(x.getEndTime());
+                boolean condition3 = endTime.isBefore(x.getEndTime());
+                boolean condition4 = endTime.isAfter(x.getStartTime());
+                System.out.println(condition1+" " + condition2 + condition3 + condition4);
+                if((condition1 && condition2) || (condition3 && condition4)){
+                    return false;
+                }
+                if(startTime.equals(x.getStartTime()) || endTime.equals(x.getEndTime())){
+                    return false;
+                }
+            }
+
+            return true;
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            ps.close();
+            rs.close();
+        }
+        return false;
     }
 
     /*
