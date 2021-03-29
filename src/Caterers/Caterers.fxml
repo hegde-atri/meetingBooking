@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Caterers.CaterersController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="720.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Caterers.CaterersController">
+   <children>
+      <TableView fx:id="myTable" layoutX="15.0" layoutY="60.0" prefHeight="595.0" prefWidth="610.0">
+        <columns>
+          <TableColumn fx:id="roomIDColumn" prefWidth="100.0" text="Room ID" />
+          <TableColumn fx:id="timeColumn" prefWidth="200.0" text="Refreshment Time" />
+            <TableColumn fx:id="refreshmentColumn" prefWidth="310.0" text="Refreshment" />
+        </columns>
+      </TableView>
+      <DatePicker fx:id="datePicker" layoutX="451.0" layoutY="673.0" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="673.0" mnemonicParsing="false" onAction="#returnToAdmin" text="Back" />
+      <Label fx:id="headingLabel" layoutX="271.0" layoutY="14.0" text="Caterer's Schedule" />
+   </children>
 </AnchorPane>

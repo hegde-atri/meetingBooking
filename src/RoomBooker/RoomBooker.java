@@ -221,29 +221,36 @@ public class RoomBooker {
     private void bookRoom() throws SQLException {
         if (verifyFields()) {
             if (checkBookings()) {
-                if (checkRefreshments()) {
-                    //Even after checking for overlapping bookings, we need to make sure that the cleaners are free at this time and can clean the room before the next booking
-                    if (roomCleaned()) {
-                        if (addBooking()) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Message");
-                            alert.setHeaderText(null);
-                            alert.setContentText("Booking created!");
+                //here
+                if (checkDouble()) {
+                    if (checkRefreshments()) {
+                        //Even after checking for overlapping bookings, we need to make sure that the cleaners are free at this time and can clean the room before the next booking
+                        if (roomCleaned()) {
+                            if (addBooking()) {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Message");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Booking created!");
 
-                            alert.showAndWait().ifPresent((btnType) -> {
-                                if (btnType == ButtonType.OK) {
-                                    backToDashboard();
-                                }
-                            });
-                        } else {
-                            infoLabel.setText("Note that we need to clean the rooms once you are done\nTherefore some booking me be unavailable depending on\nour cleaners!");
+                                alert.showAndWait().ifPresent((btnType) -> {
+                                    if (btnType == ButtonType.OK) {
+                                        backToDashboard();
+                                    }
+                                });
+                            } else {
+                                infoLabel.setText("Note that we need to clean the rooms once you are done\nTherefore some booking me be unavailable depending on\nour cleaners!");
+                            }
+                        }else{
+                            errorLabel.setText("Error with cleaners");
                         }
-                    }else{
-                        errorLabel.setText("Error with cleaners");
+                    } else {
+                        errorLabel.setText("Time selected for refreshments is unfortunately busy");
+                        infoLabel.setText("Please make sure that the refreshments times are within selected time frame!");
                     }
+                    //here
                 } else {
-                    errorLabel.setText("Time selected for refreshments is unfortunately busy");
-                    infoLabel.setText("Please make sure that the refreshments times are within selected time frame!");
+                    errorLabel.setText("Error");
+                    infoLabel.setText("User cannot make bookings in 2 rooms at the same time!");
                 }
             } else {
                 errorLabel.setText("Room busy at given time!");
@@ -510,6 +517,10 @@ public class RoomBooker {
 
     }
 
+    private boolean checkDouble(){
+        return true;
+    }
+
     /*
     To make sure that the rooms are always cleaned before someone books them we can do 2 things :
     1. Make sure the room is cleaned before someone books the room
@@ -537,4 +548,6 @@ public class RoomBooker {
             return cleaner.addCleanerBooking(roomSelector.getValue(), LocalTime.parse(et), datePicker.getValue());
         }
     }
+
+    //bad coding as its over 500 lines :/
 }

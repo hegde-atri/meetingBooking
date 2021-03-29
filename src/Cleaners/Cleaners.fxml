@@ -9,15 +9,15 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cleaners.CleanersController">
    <children>
-      <Label layoutX="271.0" layoutY="23.0" text="Cleaner's schedule" />
+      <Label layoutX="271.0" layoutY="14.0" text="Cleaner's schedule" />
       <DatePicker fx:id="datePicker" editable="false" layoutX="450.0" layoutY="668.0" />
       <Button fx:id="backButton" layoutX="14.0" layoutY="668.0" mnemonicParsing="false" onAction="#returnToAdmin" text="Back" />
       <Label layoutX="369.0" layoutY="672.0" text="Select date: " />
-      <TableView fx:id="myTable" layoutX="14.0" layoutY="181.0" prefHeight="323.0" prefWidth="469.0">
+      <TableView fx:id="myTable" layoutX="37.0" layoutY="47.0" prefHeight="603.0" prefWidth="600.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <columns>
-          <TableColumn fx:id="roomIDColumn" prefWidth="75.0" text="C1" />
-          <TableColumn fx:id="startTimeColumn" prefWidth="75.0" text="C2" />
-            <TableColumn fx:id="endTimeColumn" prefWidth="75.0" text="Column X" />
+          <TableColumn fx:id="roomIDColumn" prefWidth="100.0" text="Room ID" />
+          <TableColumn fx:id="startTimeColumn" prefWidth="250.0" text="Start time" />
+            <TableColumn fx:id="endTimeColumn" prefWidth="250.0" text="End time" />
         </columns>
       </TableView>
    </children>

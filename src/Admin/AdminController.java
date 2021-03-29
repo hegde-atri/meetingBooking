@@ -264,7 +264,7 @@ public class AdminController {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("/Caterers/Caterers.fxml").openStream());
-            Scene scene = new Scene(root, 640, 360);
+            Scene scene = new Scene(root, 640, 720);
             scene.getStylesheets().add(getClass().getResource("/Stylesheets/Caterers.css").toExternalForm());
             stage.getIcons().add(new Image("/images/caterers.png"));
             stage.setScene(scene);
