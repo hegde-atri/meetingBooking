@@ -6,6 +6,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Customer.CustomerController">
@@ -30,9 +31,10 @@
          </contextMenu>
       </TableView>
       <Label fx:id="currentBookingsLabel" layoutX="754.0" layoutY="32.0" text="Current bookings" />
-      <Button fx:id="newBookingButton" layoutX="109.0" layoutY="597.0" mnemonicParsing="false" onAction="#newBooking" text="Book a room" />
-      <Button layoutX="124.0" layoutY="541.0" mnemonicParsing="false" onAction="#initialize" text="Refresh" />
-      <Button fx:id="backButton" layoutX="14.0" layoutY="674.0" mnemonicParsing="false" onAction="#backToLogin" text="Back" />
+      <Button fx:id="newBookingButton" layoutX="110.0" layoutY="427.0" mnemonicParsing="false" onAction="#newBooking" text="Book a room" />
+      <Button layoutX="124.0" layoutY="383.0" mnemonicParsing="false" onAction="#initialize" text="Refresh" />
+      <Button fx:id="backButton" layoutX="132.0" layoutY="500.0" mnemonicParsing="false" onAction="#backToLogin" text="Back" />
       <Label fx:id="welcomeLabel" layoutX="73.0" layoutY="83.0" prefHeight="18.0" prefWidth="164.0" />
+      <TextArea layoutX="55.0" layoutY="238.0" prefHeight="122.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

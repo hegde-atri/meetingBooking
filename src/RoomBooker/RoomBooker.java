@@ -1,9 +1,4 @@
 package RoomBooker;
-/*
-IMPORTANT TO DO
-bookings checker is immune to bookings that have earlier start and later end times!!
- */
-
 
 import Cleaners.CleaningModel;
 import DBUtil.DBConnection;
@@ -535,7 +530,7 @@ public class RoomBooker {
         String date = datePicker.getValue().toString();
         LocalTime startTime = LocalTime.parse(startTimeHour.getValue() + ":" + startTimeMin.getValue());
         LocalTime endTime = LocalTime.parse(endTimeHour.getValue() + ":" + endTimeMin.getValue());
-        ArrayList<TimeSlot> userBookings = new ArrayList<>();
+        ArrayList<TimeSlot> results = new ArrayList<>();
         try{
             Connection con = DBConnection.getConnection();
             assert con != null;
@@ -543,30 +538,41 @@ public class RoomBooker {
             ps.setInt(1, LoginController.currentUser.getUserID());
             ps.setString(2, date);
 
-            ArrayList<TimeSlot> slicedUB = new ArrayList<>();
+            ArrayList<TimeSlot> userBookings = new ArrayList<>();
+            ArrayList<TimeSlot> selectedTimeSlots = new ArrayList<>(TimeSlot.returnTimeSlots(startTime, TimeSlot.getSlotNumber(startTime, endTime)));
+
 
             rs = ps.executeQuery();
             while(rs.next()){
-                userBookings.add(new TimeSlot(rs.getString(4), rs.getString(5)));
-            }
-            //Now we are going to split all objects in the userBookings arraylist into 30 min timeslots
-            for(TimeSlot x: userBookings){
-                slicedUB.addAll(TimeSlot.returnTimeSlots(x.getStartTime(), TimeSlot.getSlotNumber(x.getStartTime(), x.getEndTime())));
+                results.add(new TimeSlot(rs.getString(4), rs.getString(5)));
             }
 
+            //Now we are going to split all objects in the userBookings arraylist into 30 min timeslots from the results we got from the database
+            for(TimeSlot x: results){
+                userBookings.addAll(TimeSlot.returnTimeSlots(x.getStartTime(), TimeSlot.getSlotNumber(x.getStartTime(), x.getEndTime())));
+            }
 
-            for(TimeSlot x: slicedUB){
-                boolean condition1 = startTime.isAfter(x.getStartTime());
-                boolean condition2 = startTime.isBefore(x.getEndTime());
-                boolean condition3 = endTime.isBefore(x.getEndTime());
-                boolean condition4 = endTime.isAfter(x.getStartTime());
-                System.out.println(condition1+" " + condition2 + condition3 + condition4);
-                if((condition1 && condition2) || (condition3 && condition4)){
-                    return false;
+            //rq as in requesting slot
+            for(TimeSlot ub: userBookings){
+                for(TimeSlot rq: selectedTimeSlots){
+                    if(rq.exists(ub)){
+                        return false;
+                    }
                 }
-                if(startTime.equals(x.getStartTime()) || endTime.equals(x.getEndTime())){
-                    return false;
-                }
+
+//                System.out.println(x.toString());
+//                boolean condition1 = startTime.isAfter(x.getStartTime());
+//                boolean condition2 = startTime.isBefore(x.getEndTime());
+//                boolean condition3 = endTime.isBefore(x.getEndTime());
+//                boolean condition4 = endTime.isAfter(x.getStartTime());
+//                System.out.println(startTime.toString());
+//                System.out.println(endTime.toString());
+//                if((condition1 && condition2) || (condition3 && condition4)){
+//                    return false;
+//                }
+//                if(startTime.equals(x.getStartTime()) || endTime.equals(x.getEndTime())){
+//                    return false;
+//                }
             }
 
             return true;
@@ -574,6 +580,8 @@ public class RoomBooker {
         }catch(Exception e){
             e.printStackTrace();
         }finally{
+            assert ps != null;
+            assert rs != null;
             ps.close();
             rs.close();
         }
