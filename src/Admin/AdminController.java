@@ -109,7 +109,7 @@ public class AdminController {
 
             //To get the duration when there are no bookings.
 
-            int free = 1440 - duration;
+            int free = 7200 - duration;
             pieData = FXCollections.observableArrayList(new PieChart.Data("Bookings", duration),
                     new PieChart.Data("Unoccupied", free));
             //Sets it to null first and then adds the data so that this method can be used when the page is refreshed
