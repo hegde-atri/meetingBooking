@@ -189,7 +189,9 @@ public class RoomBooker {
             }
 
 
+            ArrayList<TimeSlot> template = TimeSlot.createTimeSlots();
             ArrayList<TimeSlot> bookedTimeSlots = new ArrayList<>();
+            ArrayList<TimeSlot> out = new ArrayList<>();
 
             //The methods below me could've easily been made into methods of the timeslot class, but TIME :/
             for (int x = 0; x < startTimes.size(); x++) {
@@ -198,9 +200,19 @@ public class RoomBooker {
 
             }
 
-            this.bookedTimeSlots = bookedTimeSlots;
-            //I was going to make it so that they can see the free times, but for now I've made it so that they can see the times that are not free.
-            ObservableList<TimeSlot> data = FXCollections.observableArrayList(this.bookedTimeSlots);
+            /*
+            The method list contains returns true if the object ts is already existing in bookedTimeSlots. If it does not exist
+            then we can add it to the out arrayList which will be displayed to the user
+            */
+            for(TimeSlot ts: template){
+                if(!TimeSlot.listContains(ts, bookedTimeSlots)){
+                    out.add(ts);
+                }
+            }
+
+            this.bookedTimeSlots = bookedTimeSlots; // This list will later be used to verify if the user has booked when the room is free or not
+
+            ObservableList<TimeSlot> data = FXCollections.observableArrayList(out);
 
             startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
             endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
@@ -344,7 +356,7 @@ public class RoomBooker {
             if (datePicker.getValue() != null) {
                 //This will check if something has been selected in the time combo boxes
                 if (startTimeHour.getValue() != null && startTimeMin.getValue() != null && endTimeHour.getValue() != null && endTimeMin.getValue() != null) {
-                    //Checks resources field
+
                     if (!refreshmentsArea.getText().isEmpty() && !refreshmentsTimeBox.getText().isEmpty()) {
                         String[] refreshments = refreshmentsArea.getText().split("[,] ", 0);
                         String[] refreshmentTimes = refreshmentsTimeBox.getText().split("[,] ", 0);

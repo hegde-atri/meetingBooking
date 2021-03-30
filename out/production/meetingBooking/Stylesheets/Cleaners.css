@@ -1,0 +1,12 @@
+.root{
+    -fx-background-color: lightblue;
+}
+#backButton{
+    -fx-background-color: teal;
+    -fx-text-fill: white;
+}
+#backButton:hover{
+    -fx-background-color: turquoise;
+    -fx-text-fill: black;
+
+}

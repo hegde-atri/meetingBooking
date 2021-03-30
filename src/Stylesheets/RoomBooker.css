@@ -34,10 +34,12 @@
 #backgroundLabel{
     -fx-background-color: lightblue;
 }
-
+#errorLabel{
+    -fx-text-fill: darkred;
+}
 #infoLabel{
     -fx-text-alignment: center;
-    -fx-text-fill: darkred;
+    -fx-text-fill: darkblue;
 }
 /*</editor-fold>*/
 

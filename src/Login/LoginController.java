@@ -48,7 +48,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         if (this.loginModel.isConnected()) {
             connectionLabel.setText("Connected to DB");
-        } else {
+        }  {
             connectionLabel.setText("DB offline");
         }
         accountType.getItems().addAll("Admin", "Customer");

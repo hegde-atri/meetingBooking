@@ -69,6 +69,16 @@ public class TimeSlot {
         return (int)timeDifference/30 ;
     }
 
+    //This method will compare the given timeslot object to every object in given arrayList
+    public static boolean listContains(TimeSlot ts, ArrayList<TimeSlot> list){
+        for(TimeSlot x: list){
+            if(x.exists(ts)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     //This will compare the current timeslot and object to ts and check whether both objects hold the same values.
     public boolean exists(TimeSlot ts)
     {
