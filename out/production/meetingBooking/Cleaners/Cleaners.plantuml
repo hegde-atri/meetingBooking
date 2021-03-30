@@ -4,6 +4,17 @@ title __CLEANERS's Class Diagram__\n
 
   namespace Cleaners {
     class Cleaners.CleanersController {
+        - backButton : Button
+        - data : ObservableList<CleaningSlot>
+        - datePicker : DatePicker
+        - endTimeColumn : TableColumn<CleaningSlot, String>
+        - myTable : TableView<CleaningSlot>
+        - roomIDColumn : TableColumn<CleaningSlot, String>
+        - startTimeColumn : TableColumn<CleaningSlot, String>
+        + initialize()
+        + returnToAdmin()
+        - initializeDatePicker()
+        - loadTable()
     }
   }
   
@@ -19,6 +30,20 @@ title __CLEANERS's Class Diagram__\n
         + getNextBooking()
         + isBooked()
         - getNextCleanerFree()
+    }
+  }
+  
+
+  namespace Cleaners {
+    class Cleaners.CleaningSlot {
+        - endTime : String
+        - roomID : String
+        - startTime : String
+        + CleaningSlot()
+        + getEndTime()
+        + getRoomID()
+        + getStartTime()
+        + toString()
     }
   }
   

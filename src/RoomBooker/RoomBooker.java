@@ -274,7 +274,7 @@ public class RoomBooker {
             }
 
         } else {
-            errorLabel.setText("Field verification error!");
+
         }
 
     }
