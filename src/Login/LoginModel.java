@@ -20,14 +20,22 @@ public class LoginModel {
          }catch(SQLException e){
              e.printStackTrace();
          }
-         if(this.connection==null){
-             System.exit(1);
-         }
      }
 
      //This will tell use whether the connection was established or not
      public boolean isConnected(){
-         return this.connection != null;
+         try{
+             Connection con = DBConnection.getConnection();
+             if(con != null){
+                 return true;
+             }else{
+                 return false;
+             }
+
+         }catch(Exception e){
+             e.printStackTrace();
+             return false;
+         }
      }
 
     //This will take the following parameters and will verify it with the database.
