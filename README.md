@@ -1,15 +1,15 @@
 # Books meeting rooms
 - [ ] Add the ability to edit bookings.
-- [ ] Catering Dashboard.
-- [ ] Cleaners Dashboard.
-- [ ] Automatically schedules cleaners after the room has been vacated. 
-- [ ] Automatically does not allow you to add refreshments at the same time as others.  
-- [ ] Customer cannot book 'occupied' rooms and cannot book unless room has been serviced.
+- [X] Catering Dashboard.
+- [X] Cleaners Dashboard.
+- [X] Automatically schedules cleaners after the room has been vacated. 
+- [X] Automatically does not allow you to add refreshments at the same time as others.  
+- [X] Customer cannot book 'occupied' rooms and cannot book unless room has been serviced.
 - [X] Customer Page verifies email format.
 - [ ] Duplicate user accounts verification  
 - [ ] ~~Customer requests for room, and Admins approve the requests.~~  
 - [ ] ~~Greyed out buttons when room is unavailable.~~  
-- [ ] Stylize UI + Add tooltips.
+- [X] Stylize UI + Add tooltips.
 ### Known mistakes (will be fixed soon)
 - Displays incorrect error message when trying to book a room.
 - Displays the booked time slots instead of the free time slots.
