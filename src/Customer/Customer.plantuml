@@ -35,7 +35,6 @@ title __CUSTOMER's Class Diagram__\n
         - backButton : Button
         - currentBookingsLabel : Label
         - data : ObservableList<userBookings>
-        - endDateColumn : TableColumn<userBookings, String>
         - endTimeColumn : TableColumn<userBookings, String>
         - myTable : TableView<userBookings>
         - newBookingButton : Button

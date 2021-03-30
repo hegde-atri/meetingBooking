@@ -4,12 +4,30 @@ title __CATERERS's Class Diagram__\n
 
   namespace Caterers {
     class Caterers.CatererModel {
+        - refreshment : String
+        - roomID : String
+        - time : String
+        + CatererModel()
+        + getRefreshment()
+        + getRoomID()
+        + getTime()
     }
   }
   
 
   namespace Caterers {
     class Caterers.CaterersController {
+        - backButton : Button
+        - datePicker : DatePicker
+        - headingLabel : Label
+        - myTable : TableView<CatererModel>
+        - refreshmentColumn : TableColumn<CatererModel, String>
+        - roomIDColumn : TableColumn<CatererModel, String>
+        - timeColumn : TableColumn<CatererModel, String>
+        + initialize()
+        + returnToAdmin()
+        - initializeDatePicker()
+        - loadTable()
     }
   }
   

@@ -98,6 +98,12 @@ title __MEETINGBOOKING's Class Diagram__\n
   }
   
 
+  namespace Cleaners {
+    class Cleaners.CleaningSlot {
+    }
+  }
+  
+
   namespace Customer {
     class Customer.CustomerBooking {
     }
