@@ -32,11 +32,10 @@
         <columns>
           <TableColumn fx:id="IDColumn" prefWidth="34.0" text="ID" />
           <TableColumn fx:id="usernameColumn" prefWidth="128.0" text="Username" />
-            <TableColumn fx:id="firstnameColumn" prefWidth="157.0" text="First name" />
-            <TableColumn fx:id="lastnameColumn" prefWidth="143.0" text="Last name" />
-            <TableColumn fx:id="passwordColumn" prefWidth="140.0" text="Password" />
-            <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="187.0" text="Email" />
-            <TableColumn fx:id="accountTypeColumn" minWidth="0.0" prefWidth="135.0" text="Account" />
+            <TableColumn fx:id="firstnameColumn" prefWidth="192.0" text="First name" />
+            <TableColumn fx:id="lastnameColumn" prefWidth="171.0" text="Last name" />
+            <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="174.0" text="Email" />
+            <TableColumn fx:id="accountTypeColumn" minWidth="0.0" prefWidth="200.0" text="Account" />
         </columns>
       </TableView>
       <Label fx:id="accountLabel" layoutX="772.0" layoutY="14.0" text="Accounts Database" />

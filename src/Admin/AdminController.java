@@ -64,8 +64,6 @@ public class AdminController {
     @FXML
     private TableColumn<AccountData, String> lastnameColumn;
     @FXML
-    private TableColumn<AccountData, String> passwordColumn;
-    @FXML
     private TableColumn<AccountData, String> emailColumn;
     @FXML
     private TableColumn<AccountData, String> accountTypeColumn;
@@ -142,7 +140,6 @@ public class AdminController {
         this.usernameColumn.setCellValueFactory(new PropertyValueFactory<>("Username"));
         this.firstnameColumn.setCellValueFactory(new PropertyValueFactory<>("Firstname"));
         this.lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("Lastname"));
-        this.passwordColumn.setCellValueFactory(new PropertyValueFactory<>("Password"));
         this.emailColumn.setCellValueFactory(new PropertyValueFactory<>("Email"));
         this.accountTypeColumn.setCellValueFactory(new PropertyValueFactory<>("AccountType"));
         //so that this doubles as a refresh function, i made it so that it removes existing data from the table and then adds them again.

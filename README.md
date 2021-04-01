@@ -6,11 +6,13 @@
 - [X] Automatically does not allow you to add refreshments at the same time as others.  
 - [X] Customer cannot book 'occupied' rooms and cannot book unless room has been serviced.
 - [X] Customer Page verifies email format.
-- [ ] Duplicate user accounts verification  
+- [ ] Duplicate user accounts verification
+- [X] Password hashing.  
 - [ ] ~~Customer requests for room, and Admins approve the requests.~~  
 - [ ] ~~Greyed out buttons when room is unavailable.~~  
 - [X] Stylize UI + Add tooltips.
 ### Known mistakes (will be fixed soon)
+- Admin creation is mostly duplicate code from the register package, will fix soon
 - Displays incorrect error message when trying to book a room.
 - Displays the booked time slots instead of the free time slots.
 ### A few shortcomings to take note of

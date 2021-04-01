@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class LoginController{
 
     //<editor-fold desc="variables">
     //This stores the information of the current user
@@ -45,7 +45,7 @@ public class LoginController implements Initializable {
 
 
 //Initialize method the tells us whether if successfully connected to the database or not
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize() {
         if (this.loginModel.isConnected()) {
             connectionLabel.setText("Connected to DB");
         } else{
@@ -64,7 +64,7 @@ public class LoginController implements Initializable {
     public void login() {
         try {
             //this if statement uses the loginModel object created in the beginning of this class and uses the isLogin method.
-            if (this.loginModel.isLogin(this.usernameField.getText(), this.passwordField.getText(), accountType.getValue())) {
+            if (this.loginModel.isLogin(this.usernameField.getText(), LoginModel.getPassHash(this.passwordField.getText()), accountType.getValue())) {
                 //This deletes the current stage (the current stage needs to be reached from the button) and opens the new stage
                 Stage stage = (Stage) this.loginButton.getScene().getWindow();
                 stage.close();

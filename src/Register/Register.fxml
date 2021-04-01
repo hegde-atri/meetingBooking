@@ -18,18 +18,18 @@
          <tooltip>
             <Tooltip text="Go back to login page" />
          </tooltip></Button>
-      <TextField fx:id="usernameField" layoutX="192.0" layoutY="102.0" prefHeight="26.0" prefWidth="160.0" promptText="Enter username" />
-      <TextField fx:id="firstNameField" layoutX="192.0" layoutY="137.0" prefHeight="26.0" prefWidth="160.0" promptText="Enter First name" />
-      <TextField fx:id="lastNameField" layoutX="192.0" layoutY="169.0" prefHeight="26.0" prefWidth="160.0" promptText="Enter Last name" />
-      <TextField fx:id="emailField" layoutX="192.0" layoutY="203.0" prefHeight="26.0" prefWidth="160.0" promptText="someone@example.com" />
-      <PasswordField fx:id="passwordField" layoutX="192.0" layoutY="238.0" prefHeight="26.0" prefWidth="160.0" promptText="Enter your password" />
+      <TextField fx:id="usernameField" layoutX="147.0" layoutY="102.0" prefHeight="26.0" prefWidth="205.0" promptText="Enter username" />
+      <TextField fx:id="firstNameField" layoutX="147.0" layoutY="137.0" prefHeight="26.0" prefWidth="205.0" promptText="Enter First name" />
+      <TextField fx:id="lastNameField" layoutX="147.0" layoutY="169.0" prefHeight="26.0" prefWidth="205.0" promptText="Enter Last name" />
+      <TextField fx:id="emailField" layoutX="147.0" layoutY="203.0" prefHeight="26.0" prefWidth="205.0" promptText="someone@example.com" />
+      <PasswordField fx:id="passwordField" layoutX="147.0" layoutY="238.0" prefHeight="26.0" prefWidth="205.0" promptText="Enter your password" />
       <Label layoutX="40.0" layoutY="106.0" prefWidth="62.0" text="Username" />
       <Label layoutX="41.0" layoutY="242.0" text="Password" />
       <Label layoutX="39.0" layoutY="141.0" text="First name" />
       <Label layoutX="40.0" layoutY="173.0" text="Last name" />
       <Label layoutX="53.0" layoutY="209.0" text="Email" />
       <Label fx:id="Heading" layoutX="127.0" layoutY="41.0" text="Create an account" />
-      <Label fx:id="errorLabel" layoutX="113.0" layoutY="295.0" prefHeight="15.0" prefWidth="160.0" textAlignment="CENTER" />
-      <PasswordField fx:id="verifyPasswordField" layoutX="192.0" layoutY="270.0" prefHeight="26.0" prefWidth="160.0" promptText="Re-enter password" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="11.0" layoutY="305.0" prefHeight="17.0" prefWidth="378.0" textAlignment="CENTER" />
+      <PasswordField fx:id="verifyPasswordField" layoutX="147.0" layoutY="270.0" prefHeight="26.0" prefWidth="205.0" promptText="Re-enter password" />
    </children>
 </AnchorPane>
