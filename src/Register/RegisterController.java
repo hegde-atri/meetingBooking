@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -107,6 +109,32 @@ public class RegisterController {
         }
     }
 
+    public static boolean isPasswordMatching(PasswordField pass, PasswordField verify){
+        return pass.getText().equals(verify.getText());
+    }
+
+    //This method will return true if the given username is already taken/in use.
+    public static boolean isUsernameTaken(String username) throws SQLException{
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Users WHERE Username = ?";
+        try{
+            Connection con = DBConnection.getConnection();
+            assert con != null;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+
+            return rs.next();
+        }catch(Exception e){
+            e.printStackTrace();
+            return true;
+        }finally{
+            ps.close();
+            rs.close();
+        }
+    }
+
     @FXML
     public void registerUser() throws SQLException {
         try {
@@ -118,28 +146,32 @@ public class RegisterController {
                     && !passwordField.getText().isEmpty()
                     && !verifyPasswordField.getText().isEmpty()) {
                 if (checkFormat()) {
-                    if (passwordField.getText().equals(verifyPasswordField.getText())) {
+                    //will return true if there is a duplicate user/ username already taken
+                    if (isPasswordMatching(passwordField, verifyPasswordField)) {
+                        boolean usernameTaken = isUsernameTaken(usernameField.getText());
+                        if (!usernameTaken) {
                             if (registerLogic(usernameField.getText(), firstNameField.getText(), lastNameField.getText(), emailField.getText())) {
+                                errorLabel.setText("");
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                 alert.setTitle("Message");
                                 alert.setHeaderText(null);
                                 alert.setContentText("Account created!");
 
                                 alert.showAndWait().ifPresent((btnType) -> {
-                                    if (btnType == ButtonType.OK) {
-                                        backToLogin();
-                                    }
                                 });
                                 backToLogin();
                             }else{
                                 errorLabel.setText("Account cannot be created with current details");
                             }
+                        } else {
+                            errorLabel.setText("Username already taken!");
+                        }
                     } else {
                         errorLabel.setText("Passwords do not match!");
                     }
 
                 } else {
-                    //errorlabel set in checkFormat method
+                    //errorLabel set in checkFormat method
                 }
             }else{
                 errorLabel.setText("Missing information!");

@@ -2,10 +2,12 @@ package Admin;
 
 /*
 This class is almost completely the same os registerController.java in the Register package
+I was probably not thinking straight while coding this.
  */
 
 import DBUtil.DBConnection;
 import Login.LoginModel;
+import Register.RegisterController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,6 +43,8 @@ public class adminCreation {
     private TextField lastNameField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private PasswordField verifyPasswordField;
     @FXML
     private TextField emailField;
     //</editor-fold>
@@ -116,26 +120,35 @@ public class adminCreation {
                     && !firstNameField.getText().isEmpty()
                     && !lastNameField.getText().isEmpty()
                     && !emailField.getText().isEmpty()
-                    && !passwordField.getText().isEmpty()) {
+                    && !passwordField.getText().isEmpty()
+                    && !verifyPasswordField.getText().isEmpty()) {
                 if (checkFormat()) {
-                    if (registerLogic(usernameField.getText(), firstNameField.getText(), lastNameField.getText(), emailField.getText())) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Message");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Account created!");
+                    if (RegisterController.isPasswordMatching(passwordField, verifyPasswordField)) {
+                        //will return true if there is a duplicate user/ username already taken
+                        boolean usernameTaken = RegisterController.isUsernameTaken(usernameField.getText());
+                        if (!usernameTaken) {
+                            if (registerLogic(usernameField.getText(), firstNameField.getText(), lastNameField.getText(), emailField.getText())) {
+                                errorLabel.setText("");
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Message");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Account created!");
 
-                        alert.showAndWait().ifPresent((btnType) -> {
-                            if (btnType == ButtonType.OK) {
+                                alert.showAndWait().ifPresent((btnType) -> {
+                                });
                                 backToAdmin();
+                            }else{
+                                errorLabel.setText("Account cannot be created with current details");
                             }
-                        });
-                        backToAdmin();
-                    }else{
-                        errorLabel.setText("Account cannot be created with current details");
+                        } else {
+                            errorLabel.setText("Username already taken!");
+                        }
+                    } else {
+                        errorLabel.setText("Passwords do not match!");
                     }
 
                 } else {
-                    errorLabel.setText("Invalid email address!");
+                    //errorLabel text set in checkFormat method
                 }
             }else{
                 errorLabel.setText("Missing information!");
