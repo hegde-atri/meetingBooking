@@ -6,7 +6,7 @@
 - [X] Automatically does not allow you to add refreshments at the same time as others.  
 - [X] Customer cannot book 'occupied' rooms and cannot book unless room has been serviced.
 - [X] Customer Page verifies email format.
-- [ ] Duplicate user accounts verification
+- [x] Duplicate user accounts verification
 - [X] Password hashing.  
 - [ ] ~~Customer requests for room, and Admins approve the requests.~~  
 - [ ] ~~Greyed out buttons when room is unavailable.~~  
