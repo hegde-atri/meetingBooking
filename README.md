@@ -18,7 +18,7 @@
 - [ ] ~~Customer requests for room, and Admins approve the requests.~~  
 - [ ] ~~Greyed out buttons when room is unavailable.~~  
 - [X] Stylize UI + Add tooltips.
-### Known mistakes (will be fixed soon)
+### Known mistakes (will be fixed if project needs updating)
 - Admin creation is mostly duplicate code from the register package, will fix soon
 - Displays incorrect error message when trying to book a room.
 - Displays the booked time slots instead of the free time slots.
