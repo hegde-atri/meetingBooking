@@ -44,13 +44,6 @@ Room 5 | 50 people | false
 - Show the user the list of available rooms/ available timeslots in sorted order.
 - A user should not be able to book 2 meeting rooms for the same time and date slot.
 
-### Meeting Booker Instructions
-- Cleaner's and caterer's dashboard can be viewed from the admin panel
-- Only Admin's can create new Admin accounts.
-- For demo purposes, the default Admin account has the username -  "owner" and password - "hello". (excluding the quotation marks.)
-- Timetables are automatically generated (for cleaners and caterers).
-- If you want to make it so that the user will be able to book for more than one day, the database is already compatible with this, therefore the only parts needed to change is the logic for booking rooms, and scheduling catering services.
-
 ### Notes to be taken from this project
 Some pointers so that I have a project plan next time before I start a project
 - Before starting the project, make a class diagram, and a dataflow diagram.
@@ -58,3 +51,11 @@ Some pointers so that I have a project plan next time before I start a project
 - Planned coding, as in code in the right order so that testing is smoother.
 - With no project plan, the project gets very sluggish after a few days.
 - Planning and then coding = 1000x faster.
+
+
+# Meeting Booker Instructions
+- Cleaner's and caterer's dashboard can be viewed from the admin panel
+- Only Admin's can create new Admin accounts.
+- For demo purposes, the default Admin account has the username -  "owner" and password - "hello". (excluding the quotation marks.)
+- Timetables are automatically generated (for cleaners and caterers).
+- If you want to make it so that the user will be able to book for more than one day, the database is already compatible with this, therefore the only parts needed to change is the logic for booking rooms, and scheduling catering services.
