@@ -25,7 +25,6 @@
 ### A few shortcomings to take note of
 - Foreign keys are not used! This means carelessly deleting customer accounts might lead to errors in booking timings for any bookings they have made in the future.
 - Users privilege structure means that you need to be an admin to access the cleaner's and catering timetable. This a security issue!
-- Passwords are not hashed/encrypted.
 
 ### The specifications for this program are as follows:
 - There are 5 different rooms, all with different sizes of how many people the room can accommodate.
